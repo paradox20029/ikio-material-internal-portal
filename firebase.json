@@ -1,8 +1,10 @@
 {
-  "firestore": {
-    "database": "ai-studio-ikioemsmaterialp-d43412e8-d76c-4445-b6e3-f9161384ac03",
-    "rules": "firestore.rules"
-  },
+  "firestore": [
+    {
+      "database": "ai-studio-ikioemsmaterialp-d43412e8-d76c-4445-b6e3-f9161384ac03",
+      "rules": "firestore.rules"
+    }
+  ],
   "hosting": {
     "public": "dist",
     "ignore": [
