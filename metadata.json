@@ -1,0 +1,6 @@
+{
+  "name": "IKIO EMS Material & Production Portal",
+  "description": "Internal Electronic Manufacturing Services (EMS) material management, production tracking, real-time shortage reporting, and administrative approval portal for IKIO.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

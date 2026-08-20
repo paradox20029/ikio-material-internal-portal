@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --brand-green: #368453;
+    --brand-green-light: #48a36b;
+    --brand-green-dark: #27633e;
+    --brand-green-darker: #1a422a;
+    --brand-green-deepest: #122f1e;
+  }
+
+  body {
+    background: linear-gradient(180deg, #1f4f32 0%, #163a24 100%);
+    background-attachment: fixed;
+    color: #f0fdf4;
+    min-height: 100vh;
+  }
+}
+
+/* Custom Green Theme Helpers */
+.bg-ikio-base {
+  background-color: #1a422a;
+}
+.bg-ikio-canvas {
+  background: radial-gradient(circle at top center, #27633e 0%, #173b25 70%, #10291a 100%);
+}
+.bg-ikio-card {
+  background-color: #173b25;
+  border-color: #2b6842;
+}
+.bg-ikio-card-hover:hover {
+  background-color: #1f4f32;
+  border-color: #368453;
+}
+.bg-ikio-surface {
+  background-color: #143320;
+}
+.border-ikio {
+  border-color: #2b6842;
+}
+.border-ikio-bright {
+  border-color: #368453;
+}
+.text-ikio-green {
+  color: #5edb8e;
+}
+.bg-ikio-green-btn {
+  background-color: #368453;
+}
+.bg-ikio-green-btn:hover {
+  background-color: #409961;
+}
