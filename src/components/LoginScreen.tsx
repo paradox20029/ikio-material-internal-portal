@@ -40,7 +40,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
       return;
     }
 
-    if (!matchedUser.active) {
+    if (matchedUser.status !== 'Active') {
       setErrorMessage('This staff account is currently inactive. Please contact an Administrator.');
       return;
     }
