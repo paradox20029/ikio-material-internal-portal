@@ -160,6 +160,33 @@ export const LINE_CONFIGURATIONS: Record<ProductionLine, LineMapping> = {
 };
 
 export const INITIAL_USERS: User[] = [
+  // Real IKIO staff accounts. These are the only two with Firebase Auth
+  // logins provisioned; the demo staff below exist so the seeded production
+  // history has plausible names attached, but nobody can sign in as them.
+  {
+    id: 'usr-admin-armaan',
+    name: 'Armaan Chetal',
+    employeeId: 'IKIO-ADM-002',
+    email: 'armaan20029@gmail.com',
+    role: 'Administrator',
+    assignedLines: 'ALL',
+    shift: 'Shift 1',
+    status: 'Active',
+    lastActive: 'Just now',
+    avatarColor: 'bg-violet-600'
+  },
+  {
+    id: 'usr-admin-narendra',
+    name: 'Narendra Prasad',
+    employeeId: 'IKIO-ADM-003',
+    email: 'nppokh@gmail.com',
+    role: 'Administrator',
+    assignedLines: 'ALL',
+    shift: 'Shift 1',
+    status: 'Active',
+    lastActive: 'Just now',
+    avatarColor: 'bg-amber-600'
+  },
   {
     id: 'usr-admin-01',
     name: 'Rajesh Sharma',

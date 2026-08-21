@@ -9,6 +9,7 @@ import {
   subscribeToRealtimeUpdates,
   initFirestoreSync 
 } from './services/storage';
+import { AuthService } from './services/auth';
 import { Navbar } from './components/Navbar';
 import { LoginScreen } from './components/LoginScreen';
 import { ProductionDataEntry } from './components/ProductionDataEntry';
@@ -16,7 +17,6 @@ import { AdminDashboard } from './components/AdminDashboard';
 import { ProductionDataTable } from './components/ProductionDataTable';
 import { MaterialShortageHub } from './components/MaterialShortageHub';
 import { StaffManagementModal } from './components/StaffManagementModal';
-import { RoleSwitcherModal } from './components/RoleSwitcherModal';
 import { RealTimeAlertsDrawer } from './components/RealTimeAlertsDrawer';
 import { 
   Bell, 
@@ -33,10 +33,11 @@ import {
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState<User>(() => StorageService.getCurrentUser());
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    // Check if session token/flag exists in sessionStorage or default to true for existing active session
-    return sessionStorage.getItem('ikio_ems_auth_active') === 'true' || true;
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  // Firebase restores an existing session asynchronously. Until it reports back
+  // we cannot distinguish "signed out" from "not checked yet", and rendering the
+  // login screen in that gap would sign out every returning user on refresh.
+  const [authChecked, setAuthChecked] = useState<boolean>(false);
   const [productionEntries, setProductionEntries] = useState<ProductionEntry[]>(() => StorageService.getProductionEntries());
   const [alerts, setAlerts] = useState<LiveAlert[]>(() => StorageService.getAlerts());
   
@@ -45,7 +46,6 @@ export default function App() {
   
   // Modals & Drawers
   const [isStaffManagerOpen, setIsStaffManagerOpen] = useState<boolean>(false);
-  const [isRoleSwitcherOpen, setIsRoleSwitcherOpen] = useState<boolean>(false);
   const [isAlertsDrawerOpen, setIsAlertsDrawerOpen] = useState<boolean>(false);
 
   // Live Toast Notification
@@ -72,6 +72,21 @@ export default function App() {
     initFirestoreSync();
   }, []);
 
+  // Firebase Auth is the single source of truth for who is signed in.
+  useEffect(() => {
+    const unsubscribe = AuthService.subscribe((staff) => {
+      if (staff) {
+        StorageService.setCurrentUser(staff);
+        setCurrentUser(staff);
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+      setAuthChecked(true);
+    });
+    return () => unsubscribe();
+  }, []);
+
   // Listen to real-time broadcast and storage events
   useEffect(() => {
     const unsubscribe = subscribeToRealtimeUpdates(() => {
@@ -85,7 +100,6 @@ export default function App() {
     StorageService.setCurrentUser(user);
     setCurrentUser(user);
     setIsAuthenticated(true);
-    sessionStorage.setItem('ikio_ems_auth_active', 'true');
     
     if (user.role === 'Administrator') {
       setActiveTab('dashboard');
@@ -96,16 +110,26 @@ export default function App() {
 
   // Handle Sign Out
   const handleSignOut = () => {
+    // The auth subscription flips isAuthenticated once Firebase confirms;
+    // clear it here too so the UI does not linger if the network is slow.
+    AuthService.signOut().catch(console.warn);
     setIsAuthenticated(false);
-    sessionStorage.removeItem('ikio_ems_auth_active');
   };
 
-  // Handle User Change via modal
-  const handleSelectUser = (newUser: User) => {
-    handleLogin(newUser);
-  };
 
   const unreadAlertCount = alerts.filter(a => !a.read).length;
+
+  // Wait for Firebase to restore any existing session before deciding.
+  if (!authChecked) {
+    return (
+      <div className="min-h-screen bg-[#173d26] flex flex-col items-center justify-center space-y-3">
+        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#368453] to-[#205233] border border-[#4ca96f]/40 flex items-center justify-center animate-pulse">
+          <Lock className="w-5 h-5 text-white" />
+        </div>
+        <p className="text-xs text-emerald-200/80 font-medium">Verifying your session…</p>
+      </div>
+    );
+  }
 
   // Render Login Gate if unauthenticated
   if (!isAuthenticated) {
@@ -118,7 +142,6 @@ export default function App() {
       {/* Top Navbar */}
       <Navbar
         currentUser={currentUser}
-        onOpenRoleSwitcher={() => setIsRoleSwitcherOpen(true)}
         onOpenStaffManager={() => setIsStaffManagerOpen(true)}
         onToggleAlerts={() => setIsAlertsDrawerOpen(true)}
         onSignOut={handleSignOut}
@@ -200,14 +223,6 @@ export default function App() {
         currentUser={currentUser}
       />
 
-      {/* Role Switcher & Login Modal */}
-      <RoleSwitcherModal
-        isOpen={isRoleSwitcherOpen}
-        onClose={() => setIsRoleSwitcherOpen(false)}
-        currentUser={currentUser}
-        onSelectUser={handleSelectUser}
-      />
-
       {/* Real-time Alerts Drawer */}
       <RealTimeAlertsDrawer
         isOpen={isAlertsDrawerOpen}
@@ -219,17 +234,13 @@ export default function App() {
         }}
       />
 
-      {/* Floating Role Quick Switcher Pill */}
+      {/* Signed-in role indicator (read-only: identity now comes from Firebase Auth) */}
       <div className="fixed bottom-4 right-4 z-30">
-        <button
-          id="btn-floating-role-switch"
-          onClick={() => setIsRoleSwitcherOpen(true)}
-          className="flex items-center space-x-2 px-3.5 py-2 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold shadow-2xl backdrop-blur-md transition group"
-        >
-          <div className={`w-2.5 h-2.5 rounded-full ${currentUser.role === 'Administrator' ? 'bg-indigo-400' : 'bg-sky-400'} animate-pulse`} />
+        <div className="flex items-center space-x-2 px-3.5 py-2 rounded-full bg-slate-900/90 border border-slate-700 text-slate-200 text-xs font-semibold shadow-2xl backdrop-blur-md">
+          <div className={`w-2.5 h-2.5 rounded-full ${currentUser.role === 'Administrator' ? 'bg-indigo-400' : 'bg-sky-400'}`} />
           <span>Role: <strong className="text-white">{currentUser.role}</strong></span>
-          <span className="text-[10px] text-slate-400 group-hover:text-slate-200">(Click to Switch)</span>
-        </button>
+          <span className="text-[10px] text-slate-400">{currentUser.employeeId}</span>
+        </div>
       </div>
 
     </div>

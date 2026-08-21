@@ -1,4 +1,5 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 import { 
   getFirestore,
   initializeFirestore,
@@ -48,6 +49,9 @@ try {
 }
 
 export const db = firestoreInstance;
+
+// Firebase Authentication instance (Email/Password provider)
+export const auth = getAuth(app);
 
 // Collection References
 const USERS_COLLECTION = 'users';

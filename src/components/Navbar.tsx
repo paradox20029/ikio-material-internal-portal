@@ -18,7 +18,7 @@ import { StorageService } from '../services/storage';
 
 interface NavbarProps {
   currentUser: User;
-  onOpenRoleSwitcher: () => void;
+  onOpenRoleSwitcher?: () => void;
   onOpenStaffManager: () => void;
   onToggleAlerts: () => void;
   onSignOut: () => void;
@@ -206,15 +206,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </div>
 
                   <div className="py-1">
-                    <button
-                      id="btn-switch-role-option"
-                      onClick={onOpenRoleSwitcher}
-                      className="w-full text-left px-4 py-2 text-slate-200 hover:bg-[#1b432a] hover:text-white flex items-center space-x-2 cursor-pointer"
-                    >
-                      <RefreshCw className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>Switch Role / Login Profile</span>
-                    </button>
-
                     {currentUser.role === 'Administrator' && (
                       <button
                         id="btn-staff-manager-option"
