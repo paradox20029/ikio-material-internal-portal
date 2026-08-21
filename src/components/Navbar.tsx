@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { User } from '../types';
 import { StorageService } from '../services/storage';
+import ikioLogo from '../ikio-logo.png';
 
 interface NavbarProps {
   currentUser: User;
@@ -91,18 +92,23 @@ export const Navbar: React.FC<NavbarProps> = ({
           
           {/* Brand Logo & Plant Info */}
           <div className="flex items-center space-x-3">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-[#368453] to-[#1f4f32] border border-[#48a36b]/40 text-white shadow-md font-black tracking-wider">
-              <Cpu className="w-6 h-6" />
-            </div>
+            {/* Imported rather than referenced as /ikio-logo.png: the file lives in
+                src/, not public/, so Vite must fingerprint and emit it. The wordmark
+                already contains the IKIO lettering, hence no separate text label, and
+                its black type needs a light tile to read against the dark navbar. */}
+            <img
+              src={ikioLogo}
+              alt="IKIO — Innovations Only"
+              className="h-10 w-auto rounded-lg bg-white px-2 py-1 shadow-md shrink-0"
+            />
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-extrabold text-xl tracking-tight text-white">IKIO</span>
                 <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#368453]/30 text-emerald-300 border border-[#368453]/60 tracking-wider">
-                  EMS PORTAL
+                  MATERIAL MANAGEMENT PORTAL
                 </span>
               </div>
               <p className="text-[11px] text-emerald-300/70 font-medium hidden sm:block">
-                Material, Line Tracking & Central Admin System
+                Internal Portal for Material Management
               </p>
             </div>
           </div>

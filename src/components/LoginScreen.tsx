@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { User } from '../types';
 import { AuthService, AuthError } from '../services/auth';
+import ikioLogo from '../ikio-logo.png';
 
 interface LoginScreenProps {
   onLoginSuccess: (user: User) => void;
@@ -65,14 +66,16 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
 
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center z-10">
-        <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-[#368453] to-[#205233] border border-[#4ca96f]/40 flex items-center justify-center text-white shadow-xl shadow-[#368453]/30 mb-4">
-          <Cpu className="w-8 h-8" />
-        </div>
+        <img
+          src={ikioLogo}
+          alt="IKIO — Innovations Only"
+          className="mx-auto h-16 w-auto rounded-xl bg-white px-3 py-2 shadow-xl shadow-black/20 mb-5"
+        />
         <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-          IKIO EMS Plant Portal
+          Internal Portal for Material Management
         </h1>
         <p className="mt-1 text-xs sm:text-sm text-emerald-200/80">
-          Electronic Manufacturing Services & Production Line System
+          Material, Line Tracking &amp; Central Admin System
         </p>
       </div>
 
