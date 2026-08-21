@@ -1,22 +1,52 @@
 rules_version = '2';
 
+// IKIO EMS — Firestore access rules.
+//
+// Sign-in is Google / Email+Password via Firebase Auth. Being *authenticated*
+// is not enough: any Google account on earth can authenticate against this
+// project, so `request.auth != null` would let the whole internet in.
+//
+// Access is therefore limited to an explicit allowlist of staff email
+// addresses. Add a person here when you add them to INITIAL_USERS in
+// src/data/initialData.ts and provision their Firebase account — all three
+// must agree or they will be able to sign in but not load any data.
+//
+// NOTE ON ROLES: role checks (who may approve a run, who may edit staff) are
+// still enforced in the UI only. Everyone on this list can write any document.
+// Real role separation needs custom auth claims or user docs keyed by UID.
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow read/write for all application collections
+
+    function isStaff() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in [
+             'armaan20029@gmail.com',
+             'nppokh@gmail.com'
+           ];
+    }
+
+    // Staff directory
     match /users/{userId} {
-      allow read, write: if true;
+      allow read, write: if isStaff();
     }
-    
+
+    // Shift production runs, including embedded material shortages
     match /production_entries/{entryId} {
-      allow read, write: if true;
+      allow read, write: if isStaff();
     }
-    
+
+    // Component stock levels
     match /inventory/{partNumber} {
-      allow read, write: if true;
+      allow read, write: if isStaff();
     }
-    
+
+    // Real-time floor alerts
     match /alerts/{alertId} {
-      allow read, write: if true;
+      allow read, write: if isStaff();
     }
+
+    // Anything not matched above is denied by default.
   }
 }
