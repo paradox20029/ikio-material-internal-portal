@@ -85,7 +85,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="bg-[#143320] border-b border-[#255b38] text-slate-100 sticky top-0 z-40 shadow-xl">
+    <header className="bg-surface-sunken border-b border-line-subtle text-content sticky top-0 z-40 shadow-xl">
       {/* Top Banner Line */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -103,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             />
             <div>
               <div className="flex items-center space-x-2">
-                <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#368453]/30 text-emerald-300 border border-[#368453]/60 tracking-wider">
+                <span className="text-xs font-bold px-2 py-0.5 rounded bg-accent/30 text-emerald-300 border border-accent/60 tracking-wider">
                   MATERIAL MANAGEMENT PORTAL
                 </span>
               </div>
@@ -114,10 +114,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Center: Live Plant Time, Shift Info & Cloud Database Status */}
-          <div className="hidden md:flex items-center space-x-3.5 bg-[#1b432a] px-4 py-1.5 rounded-full border border-[#2d6d45] text-xs">
-            <div className="flex items-center space-x-1.5 text-slate-200">
+          <div className="hidden md:flex items-center space-x-3.5 bg-surface px-4 py-1.5 rounded-full border border-line-strong text-xs">
+            <div className="flex items-center space-x-1.5 text-content-soft">
               <Clock className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-              <span className="font-mono font-semibold text-slate-100">{time}</span>
+              <span className="font-mono font-semibold text-content">{time}</span>
             </div>
             <span className="text-emerald-700">|</span>
             <div className="flex items-center space-x-1.5 text-amber-400 font-medium">
@@ -140,8 +140,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               title={soundEnabled ? 'Live Audio Chime Enabled' : 'Live Audio Chime Muted'}
               className={`p-2 rounded-xl transition-colors border cursor-pointer ${
                 soundEnabled 
-                  ? 'bg-[#1b432a] text-emerald-300 border-[#2d6d45] hover:bg-[#225535]' 
-                  : 'bg-[#143320] text-emerald-700 border-[#1f4a2e] hover:text-emerald-500'
+                  ? 'bg-surface text-emerald-300 border-line-strong hover:bg-surface-raised' 
+                  : 'bg-surface-sunken text-emerald-700 border-ikio-750 hover:text-emerald-500'
               }`}
             >
               {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
@@ -151,7 +151,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="btn-navbar-alerts"
               onClick={onToggleAlerts}
-              className="relative p-2 rounded-xl bg-[#1b432a] text-slate-200 border border-[#2d6d45] hover:bg-[#225535] hover:text-white transition-colors cursor-pointer"
+              className="relative p-2 rounded-xl bg-surface text-content-soft border border-line-strong hover:bg-surface-raised hover:text-white transition-colors cursor-pointer"
               title="Real-time alerts & live events"
             >
               <Bell className="w-4 h-4" />
@@ -167,7 +167,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 id="btn-nav-manage-staff"
                 onClick={onOpenStaffManager}
-                className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#265e3a] text-emerald-100 border border-[#3b935d] hover:bg-[#2e7146] text-xs font-semibold transition cursor-pointer shadow-sm"
+                className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-ikio-600 text-emerald-100 border border-accent-hover hover:bg-ikio-550 text-xs font-semibold transition cursor-pointer shadow-sm"
               >
                 <Users className="w-3.5 h-3.5" />
                 <span>Manage Staff & Roles</span>
@@ -179,13 +179,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 id="btn-user-dropdown"
                 onClick={() => setShowUserDropdown(!showUserDropdown)}
-                className="flex items-center space-x-2.5 p-1.5 pr-2.5 rounded-xl bg-[#1b432a] border border-[#2d6d45] hover:border-[#368453] transition cursor-pointer"
+                className="flex items-center space-x-2.5 p-1.5 pr-2.5 rounded-xl bg-surface border border-line-strong hover:border-accent transition cursor-pointer"
               >
                 <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-white text-xs ${currentUser.avatarColor}`}>
                   {currentUser.name.charAt(0)}
                 </div>
                 <div className="text-left hidden sm:block">
-                  <div className="text-xs font-semibold text-slate-100 leading-tight">
+                  <div className="text-xs font-semibold text-content leading-tight">
                     {currentUser.name}
                   </div>
                   <div className="text-[10px] text-emerald-300/70 leading-none">
@@ -198,11 +198,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Dropdown Menu */}
               {showUserDropdown && (
                 <div 
-                  className="absolute right-0 mt-2 w-64 rounded-2xl bg-[#143320] border border-[#27633e] shadow-2xl py-2 z-50 text-xs"
+                  className="absolute right-0 mt-2 w-64 rounded-2xl bg-surface-sunken border border-line shadow-2xl py-2 z-50 text-xs"
                   onClick={() => setShowUserDropdown(false)}
                 >
-                  <div className="px-4 py-2 border-b border-[#245938]">
-                    <div className="font-semibold text-slate-100">{currentUser.name}</div>
+                  <div className="px-4 py-2 border-b border-line-subtle">
+                    <div className="font-semibold text-content">{currentUser.name}</div>
                     <div className="text-emerald-300/70 text-[11px]">{currentUser.email}</div>
                     <div className="mt-1.5">
                       <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-semibold border ${getRoleBadgeColor(currentUser.role)}`}>
@@ -216,7 +216,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <button
                         id="btn-staff-manager-option"
                         onClick={onOpenStaffManager}
-                        className="w-full text-left px-4 py-2 text-slate-200 hover:bg-[#1b432a] hover:text-white flex items-center space-x-2 cursor-pointer"
+                        className="w-full text-left px-4 py-2 text-content-soft hover:bg-surface hover:text-white flex items-center space-x-2 cursor-pointer"
                       >
                         <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                         <span>Staff Directory & Access Control</span>
@@ -224,7 +224,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     )}
                   </div>
 
-                  <div className="border-t border-[#245938] pt-1">
+                  <div className="border-t border-line-subtle pt-1">
                     <button
                       id="btn-reset-demo-data"
                       onClick={() => {
@@ -232,7 +232,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           StorageService.resetAllData();
                         }
                       }}
-                      className="w-full text-left px-4 py-1.5 text-emerald-300/60 hover:bg-[#1b432a] hover:text-emerald-200 text-[11px] cursor-pointer"
+                      className="w-full text-left px-4 py-1.5 text-emerald-300/60 hover:bg-surface hover:text-emerald-200 text-[11px] cursor-pointer"
                     >
                       Reset Demo Data
                     </button>
@@ -254,7 +254,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Navigation Tabs Bar */}
-        <div className="flex space-x-1 sm:space-x-2 py-2 overflow-x-auto scrollbar-none border-t border-[#204e30]">
+        <div className="flex space-x-1 sm:space-x-2 py-2 overflow-x-auto scrollbar-none border-t border-ikio-700">
           
           {/* Tab 1: Input Screen (Data Entry) */}
           <button
@@ -262,8 +262,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setActiveTab('entry')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition whitespace-nowrap cursor-pointer ${
               activeTab === 'entry'
-                ? 'bg-[#368453] text-white shadow-md shadow-[#368453]/30 border border-[#48a36b]'
-                : 'text-emerald-100/80 hover:bg-[#1b432a] hover:text-white'
+                ? 'bg-accent text-white shadow-md shadow-accent/30 border border-accent-bright'
+                : 'text-emerald-100/80 hover:bg-surface hover:text-white'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -276,8 +276,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setActiveTab('dashboard')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition whitespace-nowrap cursor-pointer ${
               activeTab === 'dashboard'
-                ? 'bg-[#2a6841] text-white shadow-md border border-[#48a36b]'
-                : 'text-emerald-100/80 hover:bg-[#1b432a] hover:text-white'
+                ? 'bg-surface-active text-white shadow-md border border-accent-bright'
+                : 'text-emerald-100/80 hover:bg-surface hover:text-white'
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
@@ -290,8 +290,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setActiveTab('logs')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition whitespace-nowrap cursor-pointer ${
               activeTab === 'logs'
-                ? 'bg-[#2a6841] text-white shadow-sm border border-[#48a36b]'
-                : 'text-emerald-100/80 hover:bg-[#1b432a] hover:text-white'
+                ? 'bg-surface-active text-white shadow-sm border border-accent-bright'
+                : 'text-emerald-100/80 hover:bg-surface hover:text-white'
             }`}
           >
             <span>Production Matrix & Logs</span>
@@ -304,7 +304,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition whitespace-nowrap cursor-pointer ${
               activeTab === 'shortages'
                 ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20'
-                : 'text-emerald-100/80 hover:bg-[#1b432a] hover:text-white'
+                : 'text-emerald-100/80 hover:bg-surface hover:text-white'
             }`}
           >
             <span>Material Shortages & Store</span>
@@ -316,8 +316,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setActiveTab('inventory')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition whitespace-nowrap cursor-pointer ${
               activeTab === 'inventory'
-                ? 'bg-[#368453] text-white shadow-md shadow-[#368453]/30 border border-[#48a36b]'
-                : 'text-emerald-100/80 hover:bg-[#1b432a] hover:text-white'
+                ? 'bg-accent text-white shadow-md shadow-accent/30 border border-accent-bright'
+                : 'text-emerald-100/80 hover:bg-surface hover:text-white'
             }`}
           >
             <span>BOM Inventory Balance</span>

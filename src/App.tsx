@@ -122,8 +122,8 @@ export default function App() {
   // Wait for Firebase to restore any existing session before deciding.
   if (!authChecked) {
     return (
-      <div className="min-h-screen bg-[#173d26] flex flex-col items-center justify-center space-y-3">
-        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#368453] to-[#205233] border border-[#4ca96f]/40 flex items-center justify-center animate-pulse">
+      <div className="min-h-screen flex flex-col items-center justify-center space-y-3">
+        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-accent to-ikio-700 border border-accent-bright/40 flex items-center justify-center animate-pulse">
           <Lock className="w-5 h-5 text-white" />
         </div>
         <p className="text-xs text-emerald-200/80 font-medium">Verifying your session…</p>
@@ -137,7 +137,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#1b432a] text-slate-100 font-sans antialiased selection:bg-[#368453] selection:text-white flex flex-col">
+    <div className="min-h-screen text-content font-sans antialiased selection:bg-accent selection:text-white flex flex-col">
       
       {/* Top Navbar */}
       <Navbar
@@ -152,15 +152,15 @@ export default function App() {
 
       {/* Real-time Toast Notification Banner */}
       {latestToast && (
-        <div className="bg-[#143320] border-b border-[#368453]/60 px-4 py-2.5 flex items-center justify-between text-xs shadow-md animate-in slide-in-from-top duration-300">
+        <div className="bg-surface-sunken border-b border-accent/60 px-4 py-2.5 flex items-center justify-between text-xs shadow-md animate-in slide-in-from-top duration-300">
           <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
             <div className="flex items-center space-x-2.5">
               <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#368453]"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
               </span>
               <span className="font-bold text-emerald-300 uppercase tracking-wider text-[10px]">Real-Time Update:</span>
-              <span className="text-slate-100 font-medium">{latestToast.title} — {latestToast.message}</span>
+              <span className="text-content font-medium">{latestToast.title} — {latestToast.message}</span>
             </div>
             <div className="flex items-center space-x-3">
               <button
@@ -174,7 +174,7 @@ export default function App() {
               </button>
               <button
                 onClick={() => setLatestToast(null)}
-                className="text-slate-400 hover:text-slate-200 cursor-pointer"
+                className="text-content-muted hover:text-content-soft cursor-pointer"
               >
                 ✕
               </button>
@@ -236,10 +236,10 @@ export default function App() {
 
       {/* Signed-in role indicator (read-only: identity now comes from Firebase Auth) */}
       <div className="fixed bottom-4 right-4 z-30">
-        <div className="flex items-center space-x-2 px-3.5 py-2 rounded-full bg-slate-900/90 border border-slate-700 text-slate-200 text-xs font-semibold shadow-2xl backdrop-blur-md">
+        <div className="flex items-center space-x-2 px-3.5 py-2 rounded-full bg-panel/90 border border-panel-line text-content-soft text-xs font-semibold shadow-2xl backdrop-blur-md">
           <div className={`w-2.5 h-2.5 rounded-full ${currentUser.role === 'Administrator' ? 'bg-indigo-400' : 'bg-sky-400'}`} />
           <span>Role: <strong className="text-white">{currentUser.role}</strong></span>
-          <span className="text-[10px] text-slate-400">{currentUser.employeeId}</span>
+          <span className="text-[10px] text-content-muted">{currentUser.employeeId}</span>
         </div>
       </div>
 

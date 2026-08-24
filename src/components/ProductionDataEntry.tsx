@@ -223,7 +223,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
     <div className="max-w-5xl mx-auto py-6 px-4 sm:px-6">
       
       {/* Header Banner */}
-      <div className="mb-6 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl text-white relative overflow-hidden">
+      <div className="mb-6 bg-panel border border-panel-line-subtle rounded-2xl p-5 shadow-xl text-white relative overflow-hidden">
         <div className="absolute right-0 top-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
           <div>
@@ -231,18 +231,18 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
               <Layers className="w-4 h-4" />
               <span>IKIO Manufacturing Execution Screen</span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-slate-100 tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-black text-content tracking-tight">
               Production & Material Data Entry
             </h1>
-            <p className="text-xs text-slate-400 mt-1 max-w-xl">
+            <p className="text-xs text-content-muted mt-1 max-w-xl">
               Select production line, sub-line, and product from dropdown menus. Enter plan vs achieved metrics and log any material shortages for real-time administrator review.
             </p>
           </div>
 
-          <div className="flex items-center space-x-3 self-start sm:self-auto bg-slate-800/80 px-3.5 py-2 rounded-xl border border-slate-700/80">
+          <div className="flex items-center space-x-3 self-start sm:self-auto bg-panel-raised/80 px-3.5 py-2 rounded-xl border border-panel-line/80">
             <div className="text-right">
-              <div className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Logged In As</div>
-              <div className="text-xs font-bold text-slate-200">{currentUser.name}</div>
+              <div className="text-[10px] uppercase font-bold text-content-muted tracking-wider">Logged In As</div>
+              <div className="text-xs font-bold text-content-soft">{currentUser.name}</div>
               <div className="text-[11px] text-sky-400 font-medium">{currentUser.role}</div>
             </div>
             <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-white text-xs ${currentUser.avatarColor}`}>
@@ -286,20 +286,20 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
       <form onSubmit={handleSubmit} className="space-y-6">
         
         {/* Section 1: Line & Shift Configuration Dropdowns */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center space-x-2">
+        <div className="bg-panel border border-panel-line-subtle rounded-2xl p-5 shadow-lg">
+          <div className="flex items-center justify-between border-b border-panel-line-subtle pb-3 mb-4">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-content-dim flex items-center space-x-2">
               <span className="w-2 h-2 rounded-full bg-sky-500" />
               <span>1. Line, Shift & Product Selection</span>
             </h2>
-            <span className="text-[11px] text-slate-500">Cascading Dropdown Menus</span>
+            <span className="text-[11px] text-content-faint">Cascading Dropdown Menus</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             
             {/* 1. Date */}
             <div>
-              <label htmlFor="field-date" className="block text-xs font-bold text-slate-300 mb-1.5">
+              <label htmlFor="field-date" className="block text-xs font-bold text-content-dim mb-1.5">
                 Date <span className="text-rose-400">*</span>
               </label>
               <input
@@ -308,20 +308,20 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
                 required
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent font-mono"
+                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3.5 py-2.5 text-xs text-content focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent font-mono"
               />
             </div>
 
             {/* 2. Shift Dropdown */}
             <div>
-              <label htmlFor="field-shift" className="block text-xs font-bold text-slate-300 mb-1.5">
+              <label htmlFor="field-shift" className="block text-xs font-bold text-content-dim mb-1.5">
                 Shift <span className="text-rose-400">*</span>
               </label>
               <select
                 id="field-shift"
                 value={shift}
                 onChange={(e) => setShift(e.target.value as ShiftType)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 font-semibold"
+                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3.5 py-2.5 text-xs text-content focus:outline-none focus:ring-2 focus:ring-sky-500 font-semibold"
               >
                 <option value="Shift 1">Shift 1 (06:00 - 14:00)</option>
                 <option value="Shift 2">Shift 2 (14:00 - 22:00)</option>
@@ -331,14 +331,14 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
 
             {/* 3. Production Line Dropdown (SMT, MI, MI-Finishing, FA-Lum, FA-Ref) */}
             <div>
-              <label htmlFor="field-prod-line" className="block text-xs font-bold text-slate-300 mb-1.5">
+              <label htmlFor="field-prod-line" className="block text-xs font-bold text-content-dim mb-1.5">
                 Production Line <span className="text-rose-400">*</span>
               </label>
               <select
                 id="field-prod-line"
                 value={productionLine}
                 onChange={(e) => setProductionLine(e.target.value as ProductionLine)}
-                className="w-full bg-slate-800 border border-sky-500/60 rounded-xl px-3.5 py-2.5 text-xs text-sky-300 font-bold focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className="w-full bg-panel-raised border border-sky-500/60 rounded-xl px-3.5 py-2.5 text-xs text-sky-300 font-bold focus:outline-none focus:ring-2 focus:ring-sky-500"
               >
                 <option value="SMT">SMT (Surface Mount Technology)</option>
                 <option value="MI">MI (Manual Insertion)</option>
@@ -350,14 +350,14 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
 
             {/* 4. Sub Line Dropdown (Dynamically filtered by Production Line!) */}
             <div>
-              <label htmlFor="field-sub-line" className="block text-xs font-bold text-slate-300 mb-1.5">
+              <label htmlFor="field-sub-line" className="block text-xs font-bold text-content-dim mb-1.5">
                 Sub Line (Filtered for {productionLine}) <span className="text-rose-400">*</span>
               </label>
               <select
                 id="field-sub-line"
                 value={subLine}
                 onChange={(e) => setSubLine(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-100 font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3.5 py-2.5 text-xs text-content font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500"
               >
                 {availableSubLines.map((s) => (
                   <option key={s} value={s}>
@@ -369,14 +369,14 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
 
             {/* 5. Product Dropdown (Filtered by selected Line) */}
             <div className="lg:col-span-2">
-              <label htmlFor="field-product" className="block text-xs font-bold text-slate-300 mb-1.5">
+              <label htmlFor="field-product" className="block text-xs font-bold text-content-dim mb-1.5">
                 Product / Model Selection <span className="text-rose-400">*</span>
               </label>
               <select
                 id="field-product"
                 value={productName}
                 onChange={(e) => handleProductChange(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-100 font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3.5 py-2.5 text-xs text-content font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500"
               >
                 {availableProducts.map((p) => (
                   <option key={p.code} value={p.name}>
@@ -390,20 +390,20 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
         </div>
 
         {/* Section 2: Production Targets, Output & Manpower */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center space-x-2">
+        <div className="bg-panel border border-panel-line-subtle rounded-2xl p-5 shadow-lg">
+          <div className="flex items-center justify-between border-b border-panel-line-subtle pb-3 mb-4">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-content-dim flex items-center space-x-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
               <span>2. Quantity Metrics & Manpower</span>
             </h2>
-            <span className="text-[11px] text-slate-500">Live Efficiency Calculation</span>
+            <span className="text-[11px] text-content-faint">Live Efficiency Calculation</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             
             {/* Plan (Target) */}
             <div>
-              <label htmlFor="field-plan" className="block text-xs font-bold text-slate-300 mb-1.5">
+              <label htmlFor="field-plan" className="block text-xs font-bold text-content-dim mb-1.5">
                 Plan (Target Units) <span className="text-rose-400">*</span>
               </label>
               <input
@@ -414,13 +414,13 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                 onChange={(e) => setPlan(e.target.value === '' ? '' : Number(e.target.value))}
                 required
                 placeholder="e.g. 1200"
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 font-bold font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3.5 py-2.5 text-sm text-content font-bold font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
             </div>
 
             {/* Achieved (Actual Produced) */}
             <div>
-              <label htmlFor="field-achieved" className="block text-xs font-bold text-slate-300 mb-1.5">
+              <label htmlFor="field-achieved" className="block text-xs font-bold text-content-dim mb-1.5">
                 Achieved (Actual Units) <span className="text-rose-400">*</span>
               </label>
               <input
@@ -431,13 +431,13 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                 onChange={(e) => setAchieved(e.target.value === '' ? '' : Number(e.target.value))}
                 required
                 placeholder="e.g. 1150"
-                className="w-full bg-slate-800 border border-emerald-500/50 rounded-xl px-3.5 py-2.5 text-sm text-emerald-300 font-bold font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full bg-panel-raised border border-emerald-500/50 rounded-xl px-3.5 py-2.5 text-sm text-emerald-300 font-bold font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
 
             {/* Manpower Used */}
             <div>
-              <label htmlFor="field-manpower" className="block text-xs font-bold text-slate-300 mb-1.5">
+              <label htmlFor="field-manpower" className="block text-xs font-bold text-content-dim mb-1.5">
                 Manpower Used (Operators) <span className="text-rose-400">*</span>
               </label>
               <div className="relative">
@@ -448,15 +448,15 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                   value={manpowerUsed}
                   onChange={(e) => setManpowerUsed(e.target.value === '' ? '' : Number(e.target.value))}
                   required
-                  className="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-sm text-slate-100 font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="w-full bg-panel-raised border border-panel-line rounded-xl pl-9 pr-3.5 py-2.5 text-sm text-content font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
-                <Users className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                <Users className="w-4 h-4 text-content-muted absolute left-3 top-3" />
               </div>
             </div>
 
             {/* Total Working Hours */}
             <div>
-              <label htmlFor="field-hours" className="block text-xs font-bold text-slate-300 mb-1.5">
+              <label htmlFor="field-hours" className="block text-xs font-bold text-content-dim mb-1.5">
                 Total Working Hrs <span className="text-rose-400">*</span>
               </label>
               <div className="relative">
@@ -469,63 +469,63 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                   value={totalWorkingHrs}
                   onChange={(e) => setTotalWorkingHrs(e.target.value === '' ? '' : Number(e.target.value))}
                   required
-                  className="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-sm text-slate-100 font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="w-full bg-panel-raised border border-panel-line rounded-xl pl-9 pr-3.5 py-2.5 text-sm text-content font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
-                <Clock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                <Clock className="w-4 h-4 text-content-muted absolute left-3 top-3" />
               </div>
             </div>
 
           </div>
 
           {/* Real-time Computed KPI Banner */}
-          <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-800/60 p-4 rounded-xl border border-slate-700/60">
+          <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-3 bg-panel-raised/60 p-4 rounded-xl border border-panel-line/60">
             
             {/* Efficiency */}
-            <div className="text-center p-2 rounded-lg bg-slate-800/80">
-              <div className="text-[11px] text-slate-400 font-medium">Efficiency Rate</div>
+            <div className="text-center p-2 rounded-lg bg-panel-raised/80">
+              <div className="text-[11px] text-content-muted font-medium">Efficiency Rate</div>
               <div className={`text-lg font-black font-mono mt-0.5 ${
                 efficiencyPercent >= 90 ? 'text-emerald-400' : efficiencyPercent >= 80 ? 'text-amber-400' : 'text-rose-400'
               }`}>
                 {efficiencyPercent}%
               </div>
-              <div className="text-[10px] text-slate-500">Target: ≥90%</div>
+              <div className="text-[10px] text-content-faint">Target: ≥90%</div>
             </div>
 
             {/* Variance */}
-            <div className="text-center p-2 rounded-lg bg-slate-800/80">
-              <div className="text-[11px] text-slate-400 font-medium">Plan Variance</div>
+            <div className="text-center p-2 rounded-lg bg-panel-raised/80">
+              <div className="text-[11px] text-content-muted font-medium">Plan Variance</div>
               <div className={`text-lg font-black font-mono mt-0.5 ${
                 variance >= 0 ? 'text-emerald-400' : 'text-rose-400'
               }`}>
                 {variance > 0 ? `+${variance}` : variance}
               </div>
-              <div className="text-[10px] text-slate-500">units</div>
+              <div className="text-[10px] text-content-faint">units</div>
             </div>
 
             {/* Total Man-Hours */}
-            <div className="text-center p-2 rounded-lg bg-slate-800/80">
-              <div className="text-[11px] text-slate-400 font-medium">Floor Man-Hours</div>
+            <div className="text-center p-2 rounded-lg bg-panel-raised/80">
+              <div className="text-[11px] text-content-muted font-medium">Floor Man-Hours</div>
               <div className="text-lg font-black font-mono text-sky-400 mt-0.5">
-                {totalManHours.toFixed(0)} <span className="text-xs font-normal text-slate-400">hrs</span>
+                {totalManHours.toFixed(0)} <span className="text-xs font-normal text-content-muted">hrs</span>
               </div>
-              <div className="text-[10px] text-slate-500">{numericManpower} ops × {numericHrs}h</div>
+              <div className="text-[10px] text-content-faint">{numericManpower} ops × {numericHrs}h</div>
             </div>
 
             {/* Units per Man-Hour */}
-            <div className="text-center p-2 rounded-lg bg-slate-800/80">
-              <div className="text-[11px] text-slate-400 font-medium">Productivity</div>
+            <div className="text-center p-2 rounded-lg bg-panel-raised/80">
+              <div className="text-[11px] text-content-muted font-medium">Productivity</div>
               <div className="text-lg font-black font-mono text-indigo-300 mt-0.5">
                 {unitsPerManHour}
               </div>
-              <div className="text-[10px] text-slate-500">units/man-hour</div>
+              <div className="text-[10px] text-content-faint">units/man-hour</div>
             </div>
 
           </div>
 
           {/* Quality & Rejection Notes */}
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 border-t border-slate-800/80">
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 border-t border-panel-line-subtle/80">
             <div>
-              <label htmlFor="field-rejections" className="block text-xs font-medium text-slate-400 mb-1">
+              <label htmlFor="field-rejections" className="block text-xs font-medium text-content-muted mb-1">
                 Scrap / Rejection Qty (Units)
               </label>
               <input
@@ -535,11 +535,11 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                 value={rejectionQty}
                 onChange={(e) => setRejectionQty(e.target.value === '' ? '' : Number(e.target.value))}
                 placeholder="0"
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 font-mono focus:outline-none focus:ring-1 focus:ring-rose-500"
+                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3 py-2 text-xs text-content-soft font-mono focus:outline-none focus:ring-1 focus:ring-rose-500"
               />
             </div>
             <div className="sm:col-span-2">
-              <label htmlFor="field-rejection-reason" className="block text-xs font-medium text-slate-400 mb-1">
+              <label htmlFor="field-rejection-reason" className="block text-xs font-medium text-content-muted mb-1">
                 Defect Classification / Rejection Reason
               </label>
               <input
@@ -548,21 +548,21 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                 value={rejectionReason}
                 onChange={(e) => setRejectionReason(e.target.value)}
                 placeholder="e.g. Solder bridge on pin 4-5, Hi-Pot leakage, Cold solder"
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3 py-2 text-xs text-content-soft focus:outline-none focus:ring-1 focus:ring-sky-500"
               />
             </div>
           </div>
         </div>
 
         {/* Section 3: Material Shortages & Store Requisitions */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <div className="bg-panel border border-panel-line-subtle rounded-2xl p-5 shadow-lg">
+          <div className="flex items-center justify-between border-b border-panel-line-subtle pb-3 mb-4">
             <div>
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center space-x-2">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-content-dim flex items-center space-x-2">
                 <span className="w-2 h-2 rounded-full bg-amber-500" />
                 <span>3. Material Shortages & Store Requisition</span>
               </h2>
-              <p className="text-[11px] text-slate-400 mt-0.5">
+              <p className="text-[11px] text-content-muted mt-0.5">
                 Log critical part shortages. Administrator and Store Manager are immediately notified in real-time.
               </p>
             </div>
@@ -580,7 +580,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
 
           {/* Inline Add Shortage Form */}
           {showShortageForm && (
-            <div className="mb-5 bg-slate-800/90 border border-amber-500/40 rounded-xl p-4 space-y-3">
+            <div className="mb-5 bg-panel-raised/90 border border-amber-500/40 rounded-xl p-4 space-y-3">
               <div className="text-xs font-bold text-amber-300 flex items-center space-x-1.5">
                 <AlertTriangle className="w-4 h-4 text-amber-400" />
                 <span>Add Shortage Item for {productionLine} ({subLine})</span>
@@ -588,7 +588,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label htmlFor="field-shortage-part" className="block text-[11px] font-bold text-slate-300 mb-1">
+                  <label htmlFor="field-shortage-part" className="block text-[11px] font-bold text-content-dim mb-1">
                     Part Number / Component Code
                   </label>
                   <input
@@ -597,12 +597,12 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                     value={shortagePart}
                     onChange={(e) => setShortagePart(e.target.value)}
                     placeholder="e.g. IC-TPS9201, LED-2835"
-                    className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-100 font-mono"
+                    className="w-full bg-panel border border-panel-line rounded-lg px-3 py-1.5 text-xs text-content font-mono"
                   />
                   {/* Quick helper BOM chips */}
                   {availableProducts.find(p => p.name === productName)?.keyBOMComponents && (
                     <div className="flex flex-wrap gap-1 mt-1.5">
-                      <span className="text-[10px] text-slate-500">Quick BOM:</span>
+                      <span className="text-[10px] text-content-faint">Quick BOM:</span>
                       {availableProducts.find(p => p.name === productName)?.keyBOMComponents.map(chip => (
                         <button
                           key={chip}
@@ -611,7 +611,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                             setShortagePart(chip);
                             setShortageDesc(`BOM Component for ${productName}`);
                           }}
-                          className="text-[10px] bg-slate-700/70 hover:bg-slate-700 text-sky-300 px-1.5 py-0.5 rounded border border-slate-600"
+                          className="text-[10px] bg-panel-high/70 hover:bg-panel-high text-sky-300 px-1.5 py-0.5 rounded border border-n-600"
                         >
                           {chip}
                         </button>
@@ -621,7 +621,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                 </div>
 
                 <div>
-                  <label htmlFor="field-shortage-qty" className="block text-[11px] font-bold text-slate-300 mb-1">
+                  <label htmlFor="field-shortage-qty" className="block text-[11px] font-bold text-content-dim mb-1">
                     Shortage Quantity & Unit
                   </label>
                   <div className="flex space-x-2">
@@ -632,13 +632,13 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                       value={shortageQty}
                       onChange={(e) => setShortageQty(e.target.value === '' ? '' : Number(e.target.value))}
                       placeholder="Qty"
-                      className="w-2/3 bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-amber-300 font-mono font-bold"
+                      className="w-2/3 bg-panel border border-panel-line rounded-lg px-3 py-1.5 text-xs text-amber-300 font-mono font-bold"
                     />
                     <select
                       id="field-shortage-unit"
                       value={shortageUnit}
                       onChange={(e) => setShortageUnit(e.target.value)}
-                      className="w-1/3 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-slate-200"
+                      className="w-1/3 bg-panel border border-panel-line rounded-lg px-2 py-1.5 text-xs text-content-soft"
                     >
                       <option value="pcs">pcs</option>
                       <option value="reels">reels</option>
@@ -650,14 +650,14 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                 </div>
 
                 <div>
-                  <label htmlFor="field-shortage-reason" className="block text-[11px] font-bold text-slate-300 mb-1">
+                  <label htmlFor="field-shortage-reason" className="block text-[11px] font-bold text-content-dim mb-1">
                     Shortage Reason
                   </label>
                   <select
                     id="field-shortage-reason"
                     value={shortageReason}
                     onChange={(e) => setShortageReason(e.target.value as MaterialShortageItem['reason'])}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200"
+                    className="w-full bg-panel border border-panel-line rounded-lg px-3 py-1.5 text-xs text-content-soft"
                   >
                     <option value="Defective Batch">Defective Batch / Lot Failure</option>
                     <option value="Supplier Delay">Supplier / Vendor Delay</option>
@@ -671,7 +671,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 <div>
-                  <label htmlFor="field-shortage-desc" className="block text-[11px] font-bold text-slate-300 mb-1">
+                  <label htmlFor="field-shortage-desc" className="block text-[11px] font-bold text-content-dim mb-1">
                     Component Description / Notes
                   </label>
                   <input
@@ -680,7 +680,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                     value={shortageDesc}
                     onChange={(e) => setShortageDesc(e.target.value)}
                     placeholder="e.g. Reel 4 defective packaging / missing pin tape"
-                    className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-100"
+                    className="w-full bg-panel border border-panel-line rounded-lg px-3 py-1.5 text-xs text-content"
                   />
                 </div>
 
@@ -690,7 +690,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                       id="field-shortage-severity"
                       value={shortageSeverity}
                       onChange={(e) => setShortageSeverity(e.target.value as ShortageSeverity)}
-                      className="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 font-medium"
+                      className="bg-panel border border-panel-line rounded-lg px-3 py-1.5 text-xs text-content-soft font-medium"
                     >
                       <option value="Critical (Line Stoppage)">Critical (Line Stoppage Risk)</option>
                       <option value="High">High Priority</option>
@@ -703,7 +703,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                         type="checkbox"
                         checked={lineStopRisk}
                         onChange={(e) => setLineStopRisk(e.target.checked)}
-                        className="rounded bg-slate-900 border-slate-700 text-rose-600 focus:ring-rose-500"
+                        className="rounded bg-panel border-panel-line text-rose-600 focus:ring-rose-500"
                       />
                       <span>Line Stop Alert</span>
                     </label>
@@ -713,7 +713,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                     id="btn-confirm-add-shortage"
                     type="button"
                     onClick={handleAddShortage}
-                    className="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow transition"
+                    className="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-n-950 font-bold text-xs shadow transition"
                   >
                     Add Shortage
                   </button>
@@ -724,7 +724,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
 
           {/* List of Attached Shortages */}
           {shortages.length === 0 ? (
-            <div className="text-center py-6 border border-dashed border-slate-800 rounded-xl text-slate-500 text-xs">
+            <div className="text-center py-6 border border-dashed border-panel-line-subtle rounded-xl text-content-faint text-xs">
               No material shortages reported for this run. If materials are missing or damaged, click "Report Shortage".
             </div>
           ) : (
@@ -735,7 +735,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                   className={`flex items-center justify-between p-3 rounded-xl border text-xs ${
                     item.severity.includes('Critical')
                       ? 'bg-rose-950/40 border-rose-800/80 text-rose-200'
-                      : 'bg-slate-800/80 border-slate-700 text-slate-200'
+                      : 'bg-panel-raised/80 border-panel-line text-content-soft'
                   }`}
                 >
                   <div className="flex items-center space-x-3">
@@ -747,21 +747,21 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
                       {item.partNumber}
                     </div>
                     <div>
-                      <div className="font-semibold text-slate-100">
+                      <div className="font-semibold text-content">
                         Shortage: <span className="font-mono text-amber-300 font-bold">{item.shortageQty} {item.unit}</span> ({item.reason})
                       </div>
-                      <div className="text-[11px] text-slate-400">{item.description}</div>
+                      <div className="text-[11px] text-content-muted">{item.description}</div>
                     </div>
                   </div>
 
                   <div className="flex items-center space-x-2">
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-amber-400">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-panel border border-panel-line text-amber-400">
                       {item.severity}
                     </span>
                     <button
                       type="button"
                       onClick={() => handleRemoveShortage(item.id)}
-                      className="p-1 text-slate-400 hover:text-rose-400 transition"
+                      className="p-1 text-content-muted hover:text-rose-400 transition"
                       title="Remove shortage item"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -774,9 +774,9 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
         </div>
 
         {/* Section 4: Remarks & Submit Action */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+        <div className="bg-panel border border-panel-line-subtle rounded-2xl p-5 shadow-lg">
           <div className="mb-4">
-            <label htmlFor="field-notes" className="block text-xs font-bold text-slate-300 mb-1.5">
+            <label htmlFor="field-notes" className="block text-xs font-bold text-content-dim mb-1.5">
               Supervisor Floor Notes / Remarks (Optional)
             </label>
             <textarea
@@ -785,12 +785,12 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
               value={supervisorNotes}
               onChange={(e) => setSupervisorNotes(e.target.value)}
               placeholder="e.g. SMT Feeder calibration completed. Shift handover clean. Wave solder pot temperature maintained at 255°C."
-              className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
+              className="w-full bg-panel-raised border border-panel-line rounded-xl px-3.5 py-2 text-xs text-content-soft focus:outline-none focus:ring-2 focus:ring-sky-500"
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-slate-800">
-            <div className="text-xs text-slate-400 flex items-center space-x-2">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-panel-line-subtle">
+            <div className="text-xs text-content-muted flex items-center space-x-2">
               <Info className="w-4 h-4 text-sky-400" />
               <span>
                 Submitting updates the centralized Administrator dashboard immediately.

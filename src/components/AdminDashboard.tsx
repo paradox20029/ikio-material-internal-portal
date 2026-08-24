@@ -239,7 +239,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 space-y-6">
       
       {/* Top Welcome & Quick Action Bar */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl text-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-panel border border-panel-line-subtle rounded-2xl p-5 shadow-xl text-content flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center space-x-2 text-indigo-400 text-xs font-bold uppercase tracking-wider mb-1">
             <ShieldCheck className="w-4 h-4" />
@@ -248,7 +248,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
             IKIO Plant Live Production & Material Approvals
           </h1>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-content-muted mt-0.5">
             Real-time synchronization active • {productionEntries.length} total runs logged • {pendingApprovals.length} runs pending approval
           </p>
         </div>
@@ -266,7 +266,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <button
             id="btn-admin-export-csv"
             onClick={handleExportCSV}
-            className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center space-x-1.5 transition cursor-pointer"
+            className="px-3.5 py-2 rounded-xl bg-panel-raised hover:bg-panel-high text-content-soft border border-panel-line text-xs font-semibold flex items-center space-x-1.5 transition cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
@@ -287,32 +287,32 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
         
         {/* KPI 1: Target Plan */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-md">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+        <div className="bg-panel border border-panel-line-subtle rounded-2xl p-4 shadow-md">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-content-muted flex items-center justify-between">
             <span>Total Plan</span>
-            <Box className="w-3.5 h-3.5 text-slate-500" />
+            <Box className="w-3.5 h-3.5 text-content-faint" />
           </div>
-          <div className="text-xl font-black font-mono text-slate-100 mt-2">
+          <div className="text-xl font-black font-mono text-content mt-2">
             {totalPlanned.toLocaleString()}
           </div>
-          <div className="text-[10px] text-slate-500 mt-1">Target Units</div>
+          <div className="text-[10px] text-content-faint mt-1">Target Units</div>
         </div>
 
         {/* KPI 2: Achieved Output */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-md">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+        <div className="bg-panel border border-panel-line-subtle rounded-2xl p-4 shadow-md">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-content-muted flex items-center justify-between">
             <span>Achieved Output</span>
             <CheckCheck className="w-3.5 h-3.5 text-emerald-400" />
           </div>
           <div className="text-xl font-black font-mono text-emerald-400 mt-2">
             {totalAchieved.toLocaleString()}
           </div>
-          <div className="text-[10px] text-slate-500 mt-1">Actual Units Made</div>
+          <div className="text-[10px] text-content-faint mt-1">Actual Units Made</div>
         </div>
 
         {/* KPI 3: Plant Efficiency Rate */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-md">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+        <div className="bg-panel border border-panel-line-subtle rounded-2xl p-4 shadow-md">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-content-muted flex items-center justify-between">
             <span>Efficiency</span>
             <TrendingUp className="w-3.5 h-3.5 text-sky-400" />
           </div>
@@ -321,45 +321,45 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           }`}>
             {overallEfficiency}%
           </div>
-          <div className="text-[10px] text-slate-500 mt-1">Plantwide Average</div>
+          <div className="text-[10px] text-content-faint mt-1">Plantwide Average</div>
         </div>
 
         {/* KPI 4: Pending Approvals */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-md relative overflow-hidden">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+        <div className="bg-panel border border-panel-line-subtle rounded-2xl p-4 shadow-md relative overflow-hidden">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-content-muted flex items-center justify-between">
             <span>Pending Approvals</span>
             <Clock className="w-3.5 h-3.5 text-amber-400" />
           </div>
           <div className="text-xl font-black font-mono text-amber-400 mt-2">
             {pendingApprovals.length}
           </div>
-          <div className="text-[10px] text-slate-500 mt-1">Runs Awaiting Signoff</div>
+          <div className="text-[10px] text-content-faint mt-1">Runs Awaiting Signoff</div>
         </div>
 
         {/* KPI 5: Active Shortages */}
         <div className={`border rounded-2xl p-4 shadow-md ${
-          activeShortages.length > 0 ? 'bg-rose-950/20 border-rose-800/60' : 'bg-slate-900 border-slate-800'
+          activeShortages.length > 0 ? 'bg-rose-950/20 border-rose-800/60' : 'bg-panel border-panel-line-subtle'
         }`}>
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-content-muted flex items-center justify-between">
             <span>Shortages Pending</span>
             <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
           </div>
           <div className="text-xl font-black font-mono text-rose-400 mt-2">
             {activeShortages.length}
           </div>
-          <div className="text-[10px] text-slate-500 mt-1">Critical Material Requests</div>
+          <div className="text-[10px] text-content-faint mt-1">Critical Material Requests</div>
         </div>
 
         {/* KPI 6: Total Floor Manpower */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-md">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+        <div className="bg-panel border border-panel-line-subtle rounded-2xl p-4 shadow-md">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-content-muted flex items-center justify-between">
             <span>Floor Manpower</span>
             <Users className="w-3.5 h-3.5 text-indigo-400" />
           </div>
           <div className="text-xl font-black font-mono text-indigo-300 mt-2">
             {totalManpower}
           </div>
-          <div className="text-[10px] text-slate-500 mt-1">Operators Deployed</div>
+          <div className="text-[10px] text-content-faint mt-1">Operators Deployed</div>
         </div>
 
       </div>
@@ -379,7 +379,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             {activeShortages.map(({ shortage, entry }) => (
               <div 
                 key={shortage.id}
-                className="bg-slate-900/90 border border-rose-700/60 rounded-xl p-3.5 flex flex-col justify-between text-xs space-y-3"
+                className="bg-panel/90 border border-rose-700/60 rounded-xl p-3.5 flex flex-col justify-between text-xs space-y-3"
               >
                 <div>
                   <div className="flex items-center justify-between">
@@ -393,19 +393,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     </span>
                   </div>
 
-                  <div className="mt-2 text-slate-200">
+                  <div className="mt-2 text-content-soft">
                     <span className="font-semibold text-rose-300">Shortage: {shortage.shortageQty} {shortage.unit}</span>
-                    <span className="text-slate-400 ml-1">({shortage.reason})</span>
+                    <span className="text-content-muted ml-1">({shortage.reason})</span>
                   </div>
-                  <div className="text-slate-400 text-[11px] mt-0.5">
-                    Line: <strong className="text-slate-200">{entry.productionLine} ({entry.subLine})</strong> • Product: {entry.product}
+                  <div className="text-content-muted text-[11px] mt-0.5">
+                    Line: <strong className="text-content-soft">{entry.productionLine} ({entry.subLine})</strong> • Product: {entry.product}
                   </div>
-                  <div className="text-[10px] text-slate-500 mt-1">
+                  <div className="text-[10px] text-content-faint mt-1">
                     Requested by {shortage.requestedBy} at {shortage.requestedAt}
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-slate-800 flex items-center justify-end space-x-2">
+                <div className="pt-2 border-t border-panel-line-subtle flex items-center justify-end space-x-2">
                   <button
                     onClick={() => setActiveShortageApproval({
                       entryId: entry.id,
@@ -427,9 +427,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       )}
 
       {/* Cascading Filter Bar (Drop-Down Selection) */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
-          <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-300">
+      <div className="bg-panel border border-panel-line-subtle rounded-2xl p-5 shadow-lg space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-panel-line-subtle pb-3">
+          <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-content-dim">
             <Filter className="w-4 h-4 text-sky-400" />
             <span>Cascading Filter Bar — View Data Accordingly</span>
           </div>
@@ -444,7 +444,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 setSelectedStatus('ALL');
                 setSearchQuery('');
               }}
-              className="text-xs text-slate-400 hover:text-slate-200 flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 transition"
+              className="text-xs text-content-muted hover:text-content-soft flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-panel-raised hover:bg-panel-high transition"
             >
               <RotateCcw className="w-3 h-3" />
               <span>Reset Filters</span>
@@ -456,11 +456,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           
           {/* Filter 1: Date */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-400 mb-1">Date</label>
+            <label className="block text-[11px] font-bold text-content-muted mb-1">Date</label>
             <select
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-sky-500 font-mono"
+              className="w-full bg-panel-raised border border-panel-line rounded-xl px-2.5 py-2 text-xs text-content-soft focus:outline-none focus:ring-1 focus:ring-sky-500 font-mono"
             >
               <option value="ALL">All Dates</option>
               {uniqueDates.map(d => (
@@ -471,11 +471,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
           {/* Filter 2: Shift */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-400 mb-1">Shift</label>
+            <label className="block text-[11px] font-bold text-content-muted mb-1">Shift</label>
             <select
               value={selectedShift}
               onChange={(e) => setSelectedShift(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-sky-500"
+              className="w-full bg-panel-raised border border-panel-line rounded-xl px-2.5 py-2 text-xs text-content-soft focus:outline-none focus:ring-1 focus:ring-sky-500"
             >
               <option value="ALL">All Shifts</option>
               <option value="Shift 1">Shift 1</option>
@@ -486,14 +486,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
           {/* Filter 3: Production Line */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-400 mb-1">Production Line</label>
+            <label className="block text-[11px] font-bold text-content-muted mb-1">Production Line</label>
             <select
               value={selectedLine}
               onChange={(e) => {
                 setSelectedLine(e.target.value);
                 setSelectedSubLine('ALL');
               }}
-              className="w-full bg-slate-800 border border-sky-500/50 rounded-xl px-2.5 py-2 text-xs text-sky-300 font-bold focus:outline-none focus:ring-1 focus:ring-sky-500"
+              className="w-full bg-panel-raised border border-sky-500/50 rounded-xl px-2.5 py-2 text-xs text-sky-300 font-bold focus:outline-none focus:ring-1 focus:ring-sky-500"
             >
               <option value="ALL">All Lines (SMT/MI/FA)</option>
               <option value="SMT">SMT</option>
@@ -506,11 +506,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
           {/* Filter 4: Sub Line (Cascading) */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-400 mb-1">Sub Line</label>
+            <label className="block text-[11px] font-bold text-content-muted mb-1">Sub Line</label>
             <select
               value={selectedSubLine}
               onChange={(e) => setSelectedSubLine(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-sky-500"
+              className="w-full bg-panel-raised border border-panel-line rounded-xl px-2.5 py-2 text-xs text-content-soft focus:outline-none focus:ring-1 focus:ring-sky-500"
             >
               <option value="ALL">All Sub Lines</option>
               {uniqueSubLines.map(sl => (
@@ -521,11 +521,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
           {/* Filter 5: Approval Status */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-400 mb-1">Approval Status</label>
+            <label className="block text-[11px] font-bold text-content-muted mb-1">Approval Status</label>
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-sky-500"
+              className="w-full bg-panel-raised border border-panel-line rounded-xl px-2.5 py-2 text-xs text-content-soft focus:outline-none focus:ring-1 focus:ring-sky-500"
             >
               <option value="ALL">All Statuses</option>
               <option value="Pending Approval">Pending Approval</option>
@@ -536,13 +536,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
           {/* Filter 6: Search Input */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-400 mb-1">Search Product/Staff</label>
+            <label className="block text-[11px] font-bold text-content-muted mb-1">Search Product/Staff</label>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search..."
-              className="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-sky-500"
+              className="w-full bg-panel-raised border border-panel-line rounded-xl px-2.5 py-2 text-xs text-content-soft focus:outline-none focus:ring-1 focus:ring-sky-500"
             />
           </div>
 
@@ -553,17 +553,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Chart 1: Plan vs Achieved by Line (2 Cols) */}
-        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
-          <div className="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+        <div className="lg:col-span-2 bg-panel border border-panel-line-subtle rounded-2xl p-5 shadow-lg">
+          <div className="flex items-center justify-between mb-4 border-b border-panel-line-subtle pb-3">
             <div>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-content-dim">
                 Plan vs. Achieved Output by Production Line
               </h2>
-              <p className="text-[11px] text-slate-500">Filtered view performance across SMT, MI & Final Assembly</p>
+              <p className="text-[11px] text-content-faint">Filtered view performance across SMT, MI & Final Assembly</p>
             </div>
             <div className="flex items-center space-x-3 text-xs">
-              <span className="flex items-center space-x-1.5 text-slate-400">
-                <span className="w-3 h-3 rounded bg-slate-600" />
+              <span className="flex items-center space-x-1.5 text-content-muted">
+                <span className="w-3 h-3 rounded bg-n-600" />
                 <span>Plan</span>
               </span>
               <span className="flex items-center space-x-1.5 text-sky-400 font-semibold">
@@ -590,12 +590,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
 
         {/* Chart 2: Output Distribution by Shift */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
-          <div className="border-b border-slate-800 pb-3">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+        <div className="bg-panel border border-panel-line-subtle rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+          <div className="border-b border-panel-line-subtle pb-3">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-content-dim">
               Output by Shift
             </h2>
-            <p className="text-[11px] text-slate-500">Total units manufactured per shift</p>
+            <p className="text-[11px] text-content-faint">Total units manufactured per shift</p>
           </div>
 
           <div className="h-48 w-full my-auto">
@@ -621,17 +621,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </PieChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-full flex items-center justify-center text-slate-500 text-xs">
+              <div className="h-full flex items-center justify-center text-content-faint text-xs">
                 No shift data available for current filter
               </div>
             )}
           </div>
 
-          <div className="grid grid-cols-3 gap-2 pt-3 border-t border-slate-800 text-center">
+          <div className="grid grid-cols-3 gap-2 pt-3 border-t border-panel-line-subtle text-center">
             {shiftChartData.map((s) => (
-              <div key={s.name} className="p-1 rounded bg-slate-800/60">
-                <div className="text-[10px] text-slate-400">{s.name}</div>
-                <div className="text-xs font-bold font-mono text-slate-100">{s.value.toLocaleString()}</div>
+              <div key={s.name} className="p-1 rounded bg-panel-raised/60">
+                <div className="text-[10px] text-content-muted">{s.name}</div>
+                <div className="text-xs font-bold font-mono text-content">{s.value.toLocaleString()}</div>
               </div>
             ))}
           </div>
@@ -640,28 +640,28 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       </div>
 
       {/* Filtered Production Runs & Administrator Approval Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3 mb-4">
+      <div className="glass-table rounded-2xl p-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-panel-line-subtle pb-3 mb-4">
           <div>
-            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-200 flex items-center space-x-2">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-content-soft flex items-center space-x-2">
               <span className="w-2 h-2 rounded-full bg-indigo-500" />
               <span>Production Line Records & Approval Queue ({filteredEntries.length})</span>
             </h2>
-            <p className="text-[11px] text-slate-400 mt-0.5">
+            <p className="text-[11px] text-content-muted mt-0.5">
               Live floor entries. Click "Review / Approve" on any pending run to sign off or request rework.
             </p>
           </div>
         </div>
 
         {filteredEntries.length === 0 ? (
-          <div className="text-center py-12 text-slate-500 text-xs">
+          <div className="text-center py-12 text-content-faint text-xs">
             No production runs match the selected dropdown filters.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 font-semibold bg-slate-800/40">
+                <tr className="border-b border-panel-line-subtle text-content-muted font-semibold bg-panel-raised/40">
                   <th className="py-2.5 px-3">Date / Shift</th>
                   <th className="py-2.5 px-3">Line & Sub Line</th>
                   <th className="py-2.5 px-3">Work Order</th>
@@ -676,23 +676,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <th className="py-2.5 px-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/80">
+              <tbody className="divide-y divide-panel-line-subtle/80">
                 {filteredEntries.map((entry) => (
                   <tr 
                     key={entry.id}
-                    className="hover:bg-slate-800/40 transition group"
+                    className="hover:bg-panel-raised/40 transition group"
                   >
                     <td className="py-3 px-3 font-mono">
-                      <div className="text-slate-200 font-medium">{entry.date}</div>
+                      <div className="text-content-soft font-medium">{entry.date}</div>
                       <div className="text-[10px] text-sky-400 font-semibold">{entry.shift}</div>
                     </td>
 
                     <td className="py-3 px-3">
                       <div className="flex items-center space-x-1.5">
-                        <span className="px-2 py-0.5 rounded font-bold text-[10px] bg-slate-800 border border-slate-700 text-sky-300">
+                        <span className="px-2 py-0.5 rounded font-bold text-[10px] bg-panel-raised border border-panel-line text-sky-300">
                           {entry.productionLine}
                         </span>
-                        <span className="font-semibold text-slate-200">{entry.subLine}</span>
+                        <span className="font-semibold text-content-soft">{entry.subLine}</span>
                       </div>
                     </td>
 
@@ -704,11 +704,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     </td>
 
                     <td className="py-3 px-3">
-                      <div className="font-semibold text-slate-200">{entry.product}</div>
-                      <div className="text-[10px] text-slate-400 font-mono">{entry.productCode}</div>
+                      <div className="font-semibold text-content-soft">{entry.product}</div>
+                      <div className="text-[10px] text-content-muted font-mono">{entry.productCode}</div>
                     </td>
 
-                    <td className="py-3 px-3 text-right font-mono text-slate-300">
+                    <td className="py-3 px-3 text-right font-mono text-content-dim">
                       {entry.plan.toLocaleString()}
                     </td>
 
@@ -728,9 +728,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       </span>
                     </td>
 
-                    <td className="py-3 px-3 text-center font-mono text-slate-300">
+                    <td className="py-3 px-3 text-center font-mono text-content-dim">
                       <div>{entry.manpowerUsed} ops</div>
-                      <div className="text-[10px] text-slate-500">{entry.totalWorkingHrs}h ({entry.unitsPerManHour} u/h)</div>
+                      <div className="text-[10px] text-content-faint">{entry.totalWorkingHrs}h ({entry.unitsPerManHour} u/h)</div>
                     </td>
 
                     <td className="py-3 px-3 text-center">
@@ -740,19 +740,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           <span>{entry.shortages.length} item(s)</span>
                         </span>
                       ) : (
-                        <span className="text-[10px] text-slate-500">None</span>
+                        <span className="text-[10px] text-content-faint">None</span>
                       )}
                     </td>
 
                     {/* Entered By — role shown directly under the name */}
                     <td className="py-3 px-3">
-                      <div className="text-slate-200 font-medium">{entry.enteredByName}</div>
+                      <div className="text-content-soft font-medium">{entry.enteredByName}</div>
                       <div className="mt-0.5">
                         <span className="inline-block px-1.5 py-0.5 rounded text-[9px] font-bold bg-indigo-950/70 text-indigo-300 border border-indigo-800/60">
                           {entry.enteredByRole || 'Data Entry Staff'}
                         </span>
                       </div>
-                      <div className="text-[10px] text-slate-500 mt-0.5">{entry.enteredAt}</div>
+                      <div className="text-[10px] text-content-faint mt-0.5">{entry.enteredAt}</div>
                     </td>
 
                     <td className="py-3 px-3 text-center">
@@ -766,7 +766,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         {entry.adminApprovalStatus}
                       </span>
                       {entry.adminApprovedBy && (
-                        <div className="text-[9px] text-slate-500 mt-0.5">by {entry.adminApprovedBy}</div>
+                        <div className="text-[9px] text-content-faint mt-0.5">by {entry.adminApprovedBy}</div>
                       )}
                     </td>
 
@@ -792,41 +792,41 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* Modal: Production Run Approval Review */}
       {activeApprovalEntry && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 text-slate-100">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-panel-deep/80 backdrop-blur-sm p-4">
+          <div className="bg-panel border border-panel-line rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 text-content">
+            <div className="flex items-center justify-between border-b border-panel-line-subtle pb-3">
               <div className="flex items-center space-x-2">
                 <ShieldCheck className="w-5 h-5 text-indigo-400" />
                 <h3 className="font-bold text-sm text-white">Administrator Approval Review</h3>
               </div>
               <button
                 onClick={() => setActiveApprovalEntry(null)}
-                className="text-slate-400 hover:text-white text-xs"
+                className="text-content-muted hover:text-white text-xs"
               >
                 ✕
               </button>
             </div>
 
-            <div className="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700/60 text-xs space-y-2">
+            <div className="bg-panel-raised/80 p-3.5 rounded-xl border border-panel-line/60 text-xs space-y-2">
               <div className="flex justify-between">
-                <span className="text-slate-400">Line & Sub-Line:</span>
+                <span className="text-content-muted">Line & Sub-Line:</span>
                 <span className="font-bold text-sky-300">{activeApprovalEntry.productionLine} — {activeApprovalEntry.subLine}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Product:</span>
-                <span className="font-semibold text-slate-200">{activeApprovalEntry.product}</span>
+                <span className="text-content-muted">Product:</span>
+                <span className="font-semibold text-content-soft">{activeApprovalEntry.product}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Plan vs Achieved:</span>
+                <span className="text-content-muted">Plan vs Achieved:</span>
                 <span className="font-mono font-bold text-emerald-400">{activeApprovalEntry.achieved} / {activeApprovalEntry.plan} ({activeApprovalEntry.efficiencyPercent}%)</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Submitted by:</span>
-                <span className="text-slate-200">{activeApprovalEntry.enteredByName} on {activeApprovalEntry.date} ({activeApprovalEntry.shift})</span>
+                <span className="text-content-muted">Submitted by:</span>
+                <span className="text-content-soft">{activeApprovalEntry.enteredByName} on {activeApprovalEntry.date} ({activeApprovalEntry.shift})</span>
               </div>
               {activeApprovalEntry.supervisorNotes && (
-                <div className="pt-2 border-t border-slate-700/60 text-[11px] text-slate-300">
-                  <strong className="text-slate-400">Supervisor Remarks:</strong> "{activeApprovalEntry.supervisorNotes}"
+                <div className="pt-2 border-t border-panel-line/60 text-[11px] text-content-dim">
+                  <strong className="text-content-muted">Supervisor Remarks:</strong> "{activeApprovalEntry.supervisorNotes}"
                 </div>
               )}
             </div>
@@ -839,7 +839,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <span>Reported Shortages ({activeApprovalEntry.shortages.length}):</span>
                 </div>
                 {activeApprovalEntry.shortages.map(sh => (
-                  <div key={sh.id} className="text-[11px] text-slate-200 flex justify-between">
+                  <div key={sh.id} className="text-[11px] text-content-soft flex justify-between">
                     <span>{sh.partNumber} ({sh.shortageQty} {sh.unit})</span>
                     <span className="text-amber-400 font-medium">{sh.status}</span>
                   </div>
@@ -849,7 +849,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
             {/* Admin Decision Selection */}
             <div>
-              <label className="block text-xs font-bold text-slate-300 mb-1.5">Administrator Decision</label>
+              <label className="block text-xs font-bold text-content-dim mb-1.5">Administrator Decision</label>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
@@ -857,7 +857,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   className={`py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center space-x-1.5 border transition ${
                     approvalAction === 'Approved'
                       ? 'bg-emerald-600 border-emerald-500 text-white shadow-lg'
-                      : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
+                      : 'bg-panel-raised border-panel-line text-content-dim hover:bg-panel-high'
                   }`}
                 >
                   <CheckCircle2 className="w-4 h-4 text-emerald-200" />
@@ -870,7 +870,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   className={`py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center space-x-1.5 border transition ${
                     approvalAction === 'Rejected'
                       ? 'bg-rose-600 border-rose-500 text-white shadow-lg'
-                      : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
+                      : 'bg-panel-raised border-panel-line text-content-dim hover:bg-panel-high'
                   }`}
                 >
                   <XCircle className="w-4 h-4 text-rose-200" />
@@ -881,21 +881,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
             {/* Admin Remarks */}
             <div>
-              <label className="block text-xs font-bold text-slate-300 mb-1">Approval Remarks / Instructions</label>
+              <label className="block text-xs font-bold text-content-dim mb-1">Approval Remarks / Instructions</label>
               <textarea
                 rows={2}
                 value={adminRemarks}
                 onChange={(e) => setAdminRemarks(e.target.value)}
                 placeholder="e.g. Yield approved. Rework batch cleared by QA. Store buffer dispatched."
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3 py-2 text-xs text-content focus:outline-none focus:ring-1 focus:ring-sky-500"
               />
             </div>
 
-            <div className="flex justify-end space-x-2 pt-2 border-t border-slate-800">
+            <div className="flex justify-end space-x-2 pt-2 border-t border-panel-line-subtle">
               <button
                 type="button"
                 onClick={() => setActiveApprovalEntry(null)}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
+                className="px-4 py-2 rounded-xl bg-panel-raised hover:bg-panel-high text-content-dim text-xs font-semibold"
               >
                 Cancel
               </button>
@@ -913,40 +913,40 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* Modal: Shortage Store Approval */}
       {activeShortageApproval && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-          <div className="bg-slate-900 border border-rose-700 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 text-slate-100">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-panel-deep/80 backdrop-blur-sm p-4">
+          <div className="bg-panel border border-rose-700 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 text-content">
+            <div className="flex items-center justify-between border-b border-panel-line-subtle pb-3">
               <div className="flex items-center space-x-2 text-rose-300 font-bold text-sm">
                 <AlertTriangle className="w-5 h-5 text-rose-400" />
                 <span>Store Requisition Approval</span>
               </div>
               <button
                 onClick={() => setActiveShortageApproval(null)}
-                className="text-slate-400 hover:text-white text-xs"
+                className="text-content-muted hover:text-white text-xs"
               >
                 ✕
               </button>
             </div>
 
-            <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700 text-xs space-y-1.5">
+            <div className="bg-panel-raised/80 p-3 rounded-xl border border-panel-line text-xs space-y-1.5">
               <div className="flex justify-between">
-                <span className="text-slate-400">Part Number:</span>
+                <span className="text-content-muted">Part Number:</span>
                 <span className="font-mono font-bold text-sky-400">{activeShortageApproval.partNumber}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Quantity Required:</span>
+                <span className="text-content-muted">Quantity Required:</span>
                 <span className="font-mono font-bold text-amber-300">{activeShortageApproval.shortageQty} {activeShortageApproval.unit}</span>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-300 mb-1">Dispatch Notes / Remarks</label>
+              <label className="block text-xs font-bold text-content-dim mb-1">Dispatch Notes / Remarks</label>
               <input
                 type="text"
                 value={shortageRemarks}
                 onChange={(e) => setShortageRemarks(e.target.value)}
                 placeholder="e.g. Issue 250 pcs from Store Rack SMT-A-04 immediately."
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100"
+                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3 py-2 text-xs text-content"
               />
             </div>
 

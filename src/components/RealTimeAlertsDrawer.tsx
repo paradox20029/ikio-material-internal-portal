@@ -49,36 +49,36 @@ export const RealTimeAlertsDrawer: React.FC<RealTimeAlertsDrawerProps> = ({
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-slate-950/70 backdrop-blur-xs transition-opacity"
+        className="absolute inset-0 bg-panel-deep/70 backdrop-blur-xs transition-opacity"
         onClick={onClose}
       />
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col text-slate-100">
+        <div className="w-screen max-w-md bg-panel border-l border-panel-line-subtle shadow-2xl flex flex-col text-content">
           
           {/* Drawer Header */}
-          <div className="p-4 border-b border-slate-800 flex items-center justify-between">
+          <div className="p-4 border-b border-panel-line-subtle flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="p-2 rounded-xl bg-sky-500/20 text-sky-400 border border-sky-500/30">
                 <Bell className="w-4 h-4" />
               </div>
               <div>
                 <h3 className="font-bold text-sm text-white">Real-Time Event Stream</h3>
-                <p className="text-[10px] text-slate-400">Live floor updates, shortages & approvals</p>
+                <p className="text-[10px] text-content-muted">Live floor updates, shortages & approvals</p>
               </div>
             </div>
 
             <div className="flex items-center space-x-2">
               <button
                 onClick={handleMarkAllRead}
-                className="text-[11px] text-sky-400 hover:text-sky-300 font-semibold px-2 py-1 rounded bg-slate-800 hover:bg-slate-700"
+                className="text-[11px] text-sky-400 hover:text-sky-300 font-semibold px-2 py-1 rounded bg-panel-raised hover:bg-panel-high"
                 title="Mark all as read"
               >
                 Mark Read
               </button>
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+                className="p-1.5 rounded-lg text-content-muted hover:text-white hover:bg-panel-raised transition"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -88,7 +88,7 @@ export const RealTimeAlertsDrawer: React.FC<RealTimeAlertsDrawerProps> = ({
           {/* Alerts List */}
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {alerts.length === 0 ? (
-              <div className="text-center py-12 text-slate-500 text-xs">
+              <div className="text-center py-12 text-content-faint text-xs">
                 No active notifications. Live floor events will stream here automatically.
               </div>
             ) : (
@@ -103,33 +103,33 @@ export const RealTimeAlertsDrawer: React.FC<RealTimeAlertsDrawerProps> = ({
                     alt.severity === 'critical'
                       ? 'bg-rose-950/40 border-rose-800/80 text-rose-200'
                       : !alt.read
-                      ? 'bg-slate-800 border-sky-500/50 shadow-md'
-                      : 'bg-slate-800/40 border-slate-800 hover:bg-slate-800/70 text-slate-300'
+                      ? 'bg-panel-raised border-sky-500/50 shadow-md'
+                      : 'bg-panel-raised/40 border-panel-line-subtle hover:bg-panel-raised/70 text-content-dim'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center space-x-2">
                       {getAlertIcon(alt.type, alt.severity)}
-                      <span className="font-bold text-slate-100">{alt.title}</span>
+                      <span className="font-bold text-content">{alt.title}</span>
                     </div>
-                    <span className="text-[10px] text-slate-400 font-mono shrink-0">
+                    <span className="text-[10px] text-content-muted font-mono shrink-0">
                       {alt.timestamp}
                     </span>
                   </div>
 
-                  <p className="mt-1.5 text-[11px] text-slate-300 leading-relaxed">
+                  <p className="mt-1.5 text-[11px] text-content-dim leading-relaxed">
                     {alt.message}
                   </p>
 
                   {(alt.line || alt.subLine) && (
                     <div className="mt-2 flex items-center space-x-2 text-[10px]">
                       {alt.line && (
-                        <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-sky-400 font-bold">
+                        <span className="px-2 py-0.5 rounded bg-panel border border-panel-line text-sky-400 font-bold">
                           {alt.line}
                         </span>
                       )}
                       {alt.subLine && (
-                        <span className="text-slate-400">{alt.subLine}</span>
+                        <span className="text-content-muted">{alt.subLine}</span>
                       )}
                     </div>
                   )}
@@ -139,7 +139,7 @@ export const RealTimeAlertsDrawer: React.FC<RealTimeAlertsDrawerProps> = ({
           </div>
 
           {/* Footer */}
-          <div className="p-3 border-t border-slate-800 bg-slate-950 text-center text-[11px] text-slate-500">
+          <div className="p-3 border-t border-panel-line-subtle bg-panel-deep text-center text-[11px] text-content-faint">
             Broadcast channel synchronized • Real-time floor notifications
           </div>
 

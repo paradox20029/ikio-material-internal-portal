@@ -80,7 +80,7 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 space-y-6">
       
       {/* Top Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl text-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-panel border border-panel-line-subtle rounded-2xl p-5 shadow-xl text-content flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center space-x-2 text-sky-400 text-xs font-bold uppercase tracking-wider mb-1">
             <FileSpreadsheet className="w-4 h-4" />
@@ -89,14 +89,14 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
           <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
             Complete Production & Rejection Log History
           </h1>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-content-muted mt-0.5">
             Audit trail of all floor submissions with detailed metrics, supervisor notes, and QA variance
           </p>
         </div>
 
         <button
           onClick={handleExportCSV}
-          className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-bold flex items-center space-x-2 transition self-start md:self-auto cursor-pointer"
+          className="px-4 py-2 rounded-xl bg-panel-raised hover:bg-panel-high text-content-soft border border-panel-line text-xs font-bold flex items-center space-x-2 transition self-start md:self-auto cursor-pointer"
         >
           <Download className="w-4 h-4" />
           <span>Export Master CSV</span>
@@ -104,14 +104,14 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div className="bg-panel border border-panel-line-subtle rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
         <div className="flex flex-wrap items-center gap-3">
           <div>
-            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Production Line</label>
+            <label className="block text-[10px] uppercase font-bold text-content-muted mb-1">Production Line</label>
             <select
               value={selectedLine}
               onChange={(e) => setSelectedLine(e.target.value)}
-              className="bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-slate-200"
+              className="bg-panel-raised border border-panel-line rounded-xl px-2.5 py-1.5 text-xs text-content-soft"
             >
               <option value="ALL">All Lines</option>
               <option value="SMT">SMT</option>
@@ -123,11 +123,11 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
           </div>
 
           <div>
-            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Shift</label>
+            <label className="block text-[10px] uppercase font-bold text-content-muted mb-1">Shift</label>
             <select
               value={selectedShift}
               onChange={(e) => setSelectedShift(e.target.value)}
-              className="bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-slate-200"
+              className="bg-panel-raised border border-panel-line rounded-xl px-2.5 py-1.5 text-xs text-content-soft"
             >
               <option value="ALL">All Shifts</option>
               <option value="Shift 1">Shift 1</option>
@@ -143,7 +143,7 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
                 setSelectedShift('ALL');
                 setSearchQuery('');
               }}
-              className="mt-4 text-xs text-slate-400 hover:text-white flex items-center space-x-1"
+              className="mt-4 text-xs text-content-muted hover:text-white flex items-center space-x-1"
             >
               <RotateCcw className="w-3 h-3" />
               <span>Clear</span>
@@ -152,26 +152,26 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
         </div>
 
         <div className="w-full sm:w-64">
-          <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Search Product / Operator</label>
+          <label className="block text-[10px] uppercase font-bold text-content-muted mb-1">Search Product / Operator</label>
           <div className="relative">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search product code, operator..."
-              className="w-full bg-slate-800 border border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-200"
+              className="w-full bg-panel-raised border border-panel-line rounded-xl pl-8 pr-3 py-1.5 text-xs text-content-soft"
             />
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2" />
+            <Search className="w-3.5 h-3.5 text-content-muted absolute left-2.5 top-2" />
           </div>
         </div>
       </div>
 
       {/* Data Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+      <div className="glass-table rounded-2xl p-5">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-semibold bg-slate-800/40">
+              <tr className="border-b border-panel-line-subtle text-content-muted font-semibold bg-panel-raised/40">
                 <th className="py-3 px-3">Date & Shift</th>
                 <th className="py-3 px-3">Line / Sub-Line</th>
                 <th className="py-3 px-3">Work Order</th>
@@ -187,17 +187,17 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
                 <th className="py-3 px-3 text-right">Details</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/80">
+            <tbody className="divide-y divide-panel-line-subtle/80">
               {filtered.map((entry) => (
-                <tr key={entry.id} className="hover:bg-slate-800/40 transition">
+                <tr key={entry.id} className="hover:bg-panel-raised/40 transition">
                   <td className="py-3 px-3 font-mono">
-                    <div className="text-slate-200 font-semibold">{entry.date}</div>
+                    <div className="text-content-soft font-semibold">{entry.date}</div>
                     <div className="text-[10px] text-sky-400 font-bold">{entry.shift}</div>
                   </td>
 
                   <td className="py-3 px-3">
-                    <div className="font-bold text-slate-200">{entry.productionLine}</div>
-                    <div className="text-[10px] text-slate-400">{entry.subLine}</div>
+                    <div className="font-bold text-content-soft">{entry.productionLine}</div>
+                    <div className="text-[10px] text-content-muted">{entry.subLine}</div>
                   </td>
 
                   {/* Work Order */}
@@ -208,11 +208,11 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
                   </td>
 
                   <td className="py-3 px-3">
-                    <div className="font-semibold text-slate-200">{entry.product}</div>
-                    <div className="text-[10px] text-slate-400 font-mono">{entry.productCode}</div>
+                    <div className="font-semibold text-content-soft">{entry.product}</div>
+                    <div className="text-[10px] text-content-muted font-mono">{entry.productCode}</div>
                   </td>
 
-                  <td className="py-3 px-3 text-right font-mono text-slate-300">
+                  <td className="py-3 px-3 text-right font-mono text-content-dim">
                     {entry.plan.toLocaleString()}
                   </td>
 
@@ -238,7 +238,7 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
                     </span>
                   </td>
 
-                  <td className="py-3 px-3 text-center font-mono text-slate-300">
+                  <td className="py-3 px-3 text-center font-mono text-content-dim">
                     {entry.manpowerUsed} ops ({entry.unitsPerManHour} u/h)
                   </td>
 
@@ -246,19 +246,19 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
                     {entry.rejectionQty ? (
                       <span className="text-rose-400 font-bold">{entry.rejectionQty}</span>
                     ) : (
-                      <span className="text-slate-500">0</span>
+                      <span className="text-content-faint">0</span>
                     )}
                   </td>
 
                   {/* Entered By — role shown directly under the name */}
                   <td className="py-3 px-3">
-                    <div className="text-slate-200 font-medium">{entry.enteredByName}</div>
+                    <div className="text-content-soft font-medium">{entry.enteredByName}</div>
                     <div className="mt-0.5">
                       <span className="inline-block px-1.5 py-0.5 rounded text-[9px] font-bold bg-indigo-950/70 text-indigo-300 border border-indigo-800/60">
                         {entry.enteredByRole || 'Data Entry Staff'}
                       </span>
                     </div>
-                    <div className="text-[10px] text-slate-500 mt-0.5">{entry.enteredAt}</div>
+                    <div className="text-[10px] text-content-faint mt-0.5">{entry.enteredAt}</div>
                   </td>
 
                   <td className="py-3 px-3 text-center">
@@ -276,7 +276,7 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
                   <td className="py-3 px-3 text-right">
                     <button
                       onClick={() => setInspectedEntry(entry)}
-                      className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition"
+                      className="p-1.5 rounded-lg bg-panel-raised hover:bg-panel-high text-content-dim hover:text-white transition"
                       title="Inspect full run details"
                     >
                       <Eye className="w-3.5 h-3.5" />
@@ -291,36 +291,36 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
 
       {/* Record Inspector Modal */}
       {inspectedEntry && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4 text-slate-100">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-panel-deep/80 backdrop-blur-sm p-4">
+          <div className="bg-panel border border-panel-line rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4 text-content">
+            <div className="flex items-center justify-between border-b border-panel-line-subtle pb-3">
               <div>
                 <h3 className="font-bold text-sm text-white">Production Run #{inspectedEntry.id}</h3>
-                <p className="text-[11px] text-slate-400">{inspectedEntry.productionLine} — {inspectedEntry.subLine} ({inspectedEntry.date} {inspectedEntry.shift})</p>
+                <p className="text-[11px] text-content-muted">{inspectedEntry.productionLine} — {inspectedEntry.subLine} ({inspectedEntry.date} {inspectedEntry.shift})</p>
               </div>
               <button
                 onClick={() => setInspectedEntry(null)}
-                className="text-slate-400 hover:text-white text-xs"
+                className="text-content-muted hover:text-white text-xs"
               >
                 ✕
               </button>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-800/80 p-3 rounded-2xl border border-slate-700/60 font-mono text-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-panel-raised/80 p-3 rounded-2xl border border-panel-line/60 font-mono text-xs">
               <div>
-                <div className="text-[10px] text-slate-400 uppercase">Plan</div>
-                <div className="text-sm font-bold text-slate-200">{inspectedEntry.plan}</div>
+                <div className="text-[10px] text-content-muted uppercase">Plan</div>
+                <div className="text-sm font-bold text-content-soft">{inspectedEntry.plan}</div>
               </div>
               <div>
-                <div className="text-[10px] text-slate-400 uppercase">Achieved</div>
+                <div className="text-[10px] text-content-muted uppercase">Achieved</div>
                 <div className="text-sm font-bold text-emerald-400">{inspectedEntry.achieved}</div>
               </div>
               <div>
-                <div className="text-[10px] text-slate-400 uppercase">Efficiency</div>
+                <div className="text-[10px] text-content-muted uppercase">Efficiency</div>
                 <div className="text-sm font-bold text-sky-400">{inspectedEntry.efficiencyPercent}%</div>
               </div>
               <div>
-                <div className="text-[10px] text-slate-400 uppercase">Productivity</div>
+                <div className="text-[10px] text-content-muted uppercase">Productivity</div>
                 <div className="text-sm font-bold text-indigo-300">{inspectedEntry.unitsPerManHour} u/h</div>
               </div>
             </div>
@@ -332,7 +332,7 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
                   <span>Reported Shortages ({inspectedEntry.shortages.length})</span>
                 </div>
                 {inspectedEntry.shortages.map(sh => (
-                  <div key={sh.id} className="text-[11px] text-slate-200 flex justify-between border-b border-rose-900/40 pb-1">
+                  <div key={sh.id} className="text-[11px] text-content-soft flex justify-between border-b border-rose-900/40 pb-1">
                     <span>{sh.partNumber} — {sh.shortageQty} {sh.unit} ({sh.reason})</span>
                     <span className="font-bold text-amber-400">{sh.status}</span>
                   </div>
@@ -341,9 +341,9 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
             )}
 
             {inspectedEntry.supervisorNotes && (
-              <div className="bg-slate-800/60 p-3 rounded-xl border border-slate-700/50 text-xs">
-                <div className="font-bold text-slate-300 mb-0.5">Supervisor Notes</div>
-                <p className="text-slate-300 text-[11px] italic">"{inspectedEntry.supervisorNotes}"</p>
+              <div className="bg-panel-raised/60 p-3 rounded-xl border border-panel-line/50 text-xs">
+                <div className="font-bold text-content-dim mb-0.5">Supervisor Notes</div>
+                <p className="text-content-dim text-[11px] italic">"{inspectedEntry.supervisorNotes}"</p>
               </div>
             )}
 
@@ -351,14 +351,14 @@ export const ProductionDataTable: React.FC<ProductionDataTableProps> = ({
               <div className="bg-indigo-950/30 p-3 rounded-xl border border-indigo-800/50 text-xs">
                 <div className="font-bold text-indigo-300 mb-0.5">Administrator Approval Remarks</div>
                 <p className="text-indigo-200 text-[11px]">"{inspectedEntry.adminApprovalNotes}"</p>
-                <div className="text-[10px] text-slate-400 mt-1">Signed off by {inspectedEntry.adminApprovedBy} ({inspectedEntry.adminApprovedAt})</div>
+                <div className="text-[10px] text-content-muted mt-1">Signed off by {inspectedEntry.adminApprovedBy} ({inspectedEntry.adminApprovedAt})</div>
               </div>
             )}
 
-            <div className="flex justify-end pt-2 border-t border-slate-800">
+            <div className="flex justify-end pt-2 border-t border-panel-line-subtle">
               <button
                 onClick={() => setInspectedEntry(null)}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold"
+                className="px-4 py-2 rounded-xl bg-panel-raised hover:bg-panel-high text-content-soft text-xs font-semibold"
               >
                 Close Inspector
               </button>
