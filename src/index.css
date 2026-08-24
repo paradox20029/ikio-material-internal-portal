@@ -1,52 +1,154 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --brand-green: #368453;
-    --brand-green-light: #48a36b;
-    --brand-green-dark: #27633e;
-    --brand-green-darker: #1a422a;
-    --brand-green-deepest: #122f1e;
-  }
+/*
+ * IKIO EMS colour system.
+ *
+ * The components previously carried ~34 distinct hand-written greens, many
+ * separated by 1-2% lightness with no intent behind the difference. They are
+ * collapsed here into a single 12-step ramp, plus semantic aliases that say
+ * what a colour is *for* rather than what it looks like.
+ *
+ * Prefer the semantic names (bg-surface, border-subtle, text-accent) in
+ * components. Reach for a raw ramp step only when nothing semantic fits —
+ * and if that happens often, the semantic set is missing something.
+ *
+ * Changing the palette should mean editing this file and nothing else.
+ */
 
+@theme {
+  /* ---- IKIO green ramp -------------------------------------------------- */
+  --color-ikio-990: #0d2114;
+  --color-ikio-975: #112a19;
+  --color-ikio-950: #16351f;
+  --color-ikio-900: #1a3d26;
+  --color-ikio-850: #1e4529;
+  --color-ikio-800: #234d2f;
+  --color-ikio-750: #285634;
+  --color-ikio-700: #2b5b38;
+  --color-ikio-650: #2e6139;
+  --color-ikio-600: #33693f;
+  --color-ikio-550: #367245;
+  --color-ikio-500: #368453;
+  --color-ikio-450: #3f9961;
+  --color-ikio-400: #48a36b;
+
+  /* ---- Semantic surfaces ------------------------------------------------ */
+  --color-surface: var(--color-ikio-750);        /* page / navbar background */
+  --color-surface-sunken: var(--color-ikio-900); /* inset strips, toast bar   */
+  --color-surface-deep: var(--color-ikio-950);   /* cards on a dark page      */
+  --color-surface-raised: var(--color-ikio-650); /* hover state               */
+  --color-surface-active: var(--color-ikio-550); /* selected nav tab          */
+
+  /* ---- Semantic borders ------------------------------------------------- */
+  --color-line-subtle: var(--color-ikio-650);  /* dividers, quiet outlines  */
+  --color-line: var(--color-ikio-600);
+  --color-line-strong: var(--color-ikio-550);  /* inputs, emphasis          */
+
+  /* ---- Brand accent ----------------------------------------------------- */
+  --color-accent: var(--color-ikio-500);         /* primary buttons, active   */
+  --color-accent-hover: var(--color-ikio-450);
+  --color-accent-bright: var(--color-ikio-400);  /* accent borders, glints    */
+
+  /* ---- Table surface ----------------------------------------------------
+   * Two ramp steps below the page background, so data tables sit *into* the
+   * page rather than floating on it.
+   */
+  --color-table: var(--color-ikio-990);
+
+  /* ---- Brand gold (from the logo mark) ---------------------------------- */
+  --color-ikio-gold: #efc13c;
+
+  /*
+   * ---- Neutral ramp -----------------------------------------------------
+   * Values are Tailwind's `slate` scale, inlined rather than aliased so a
+   * future palette change edits these lines instead of hunting through
+   * components. This is the ramp the data-dense views are built on.
+   */
+  --color-n-100: oklch(96.8% 0.007 247.896);
+  --color-n-200: oklch(92.9% 0.013 255.508);
+  --color-n-300: oklch(86.9% 0.022 252.894);
+  --color-n-400: oklch(70.4% 0.04 256.788);
+  --color-n-500: oklch(55.4% 0.046 257.417);
+  --color-n-600: oklch(44.6% 0.043 257.281);
+  --color-n-700: oklch(37.2% 0.044 257.287);
+  --color-n-800: oklch(27.9% 0.041 260.031);
+  --color-n-900: oklch(20.8% 0.042 265.755);
+  --color-n-950: oklch(12.9% 0.042 264.695);
+
+  /*
+   * ---- Panels (cards, tables) -------------------------------------------
+   * These were Tailwind slate, which put blue-grey cards inside green chrome
+   * and made the app read as navy. Pointed at the green ramp instead so the
+   * whole interface is one family. Swap these six lines back to --color-n-*
+   * to restore the neutral look.
+   */
+  --color-panel-deep: var(--color-ikio-990);
+  --color-panel: var(--color-ikio-975);
+  --color-panel-raised: var(--color-ikio-950);
+  --color-panel-high: var(--color-ikio-900);
+
+  --color-panel-line-subtle: var(--color-ikio-750);
+  --color-panel-line: var(--color-ikio-650);
+
+  /*
+   * ---- Text ---------------------------------------------------------------
+   * Named by emphasis, not lightness, so the ordering survives a light theme
+   * (where `content` becomes the darkest value rather than the lightest).
+   */
+  --color-content: var(--color-n-100);        /* headings, key figures */
+  --color-content-soft: var(--color-n-200);
+  --color-content-dim: var(--color-n-300);
+  --color-content-muted: var(--color-n-300);  /* labels, secondary     */
+  --color-content-faint: var(--color-n-400);  /* timestamps, hints     */
+}
+
+@layer base {
   body {
-    background: linear-gradient(180deg, #1f4f32 0%, #163a24 100%);
+    /*
+     * IKIO brand artwork sits at the back, under a near-opaque green scrim.
+     * The artwork is light; without the scrim every label and figure in the
+     * app would be white-on-pale-green. The scrim keeps existing contrast
+     * intact and lets the hexagons, world map and factory line read as
+     * texture. Lower the two percentages to let more artwork through.
+     */
+    background-image:
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--color-ikio-600) 55%, transparent) 0%,
+        color-mix(in oklab, var(--color-ikio-700) 10%, transparent) 100%
+      ),
+      url("./ikio-bg.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     background-attachment: fixed;
     color: #f0fdf4;
     min-height: 100vh;
   }
 }
 
-/* Custom Green Theme Helpers */
-.bg-ikio-base {
-  background-color: #1a422a;
-}
-.bg-ikio-canvas {
-  background: radial-gradient(circle at top center, #27633e 0%, #173b25 70%, #10291a 100%);
-}
-.bg-ikio-card {
-  background-color: #173b25;
-  border-color: #2b6842;
-}
-.bg-ikio-card-hover:hover {
-  background-color: #1f4f32;
-  border-color: #368453;
-}
-.bg-ikio-surface {
-  background-color: #143320;
-}
-.border-ikio {
-  border-color: #2b6842;
-}
-.border-ikio-bright {
-  border-color: #368453;
-}
-.text-ikio-green {
-  color: #5edb8e;
-}
-.bg-ikio-green-btn {
-  background-color: #368453;
-}
-.bg-ikio-green-btn:hover {
-  background-color: #409961;
+@layer components {
+  /*
+   * Frosted-glass table surface. The translucency is what sells the effect —
+   * a solid fill with a blur behind it looks identical to a flat panel, so the
+   * alpha and the backdrop-filter have to travel together.
+   */
+  .glass-table {
+    background-color: color-mix(in oklab, var(--color-table) 80%, transparent);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    border: 1px solid color-mix(in oklab, var(--color-ikio-400) 22%, transparent);
+    box-shadow:
+      0 10px 30px -12px rgb(0 0 0 / 0.55),
+      inset 0 1px 0 rgb(255 255 255 / 0.06);
+  }
+
+  /* Header and hover rows need to stay legible over the blur. */
+  .glass-table thead tr {
+    background-color: color-mix(in oklab, var(--color-ikio-900) 55%, transparent);
+  }
+
+  .glass-table tbody tr:hover {
+    background-color: color-mix(in oklab, var(--color-ikio-750) 38%, transparent);
+  }
 }

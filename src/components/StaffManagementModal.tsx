@@ -113,11 +113,11 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="bg-slate-900 border border-slate-700 rounded-3xl max-w-4xl w-full p-6 shadow-2xl space-y-6 text-slate-100 my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-panel-deep/80 backdrop-blur-sm p-4 overflow-y-auto">
+      <div className="bg-panel border border-panel-line rounded-3xl max-w-4xl w-full p-6 shadow-2xl space-y-6 text-content my-8">
         
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div className="flex items-center justify-between border-b border-panel-line-subtle pb-4">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-xl bg-indigo-600/30 border border-indigo-500/50 flex items-center justify-center text-indigo-400">
               <Users className="w-5 h-5" />
@@ -126,7 +126,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
               <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">
                 IKIO Staff & Access Control Directory
               </h2>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-content-muted">
                 Administrator panel: Add data entry staff, assign production lines, and set roles
               </p>
             </div>
@@ -134,7 +134,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            className="p-2 rounded-xl text-content-muted hover:text-white hover:bg-panel-raised transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -142,7 +142,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
 
         {/* Add Staff Button / Action */}
         <div className="flex items-center justify-between">
-          <div className="text-xs text-slate-400">
+          <div className="text-xs text-content-muted">
             Total Staff Registered: <strong className="text-white font-mono">{users.length}</strong>
           </div>
 
@@ -158,7 +158,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
 
         {/* Add New Staff Member Form */}
         {showAddForm && (
-          <form onSubmit={handleCreateStaff} className="bg-slate-800/90 border border-indigo-500/40 rounded-2xl p-5 space-y-4">
+          <form onSubmit={handleCreateStaff} className="bg-panel-raised/90 border border-indigo-500/40 rounded-2xl p-5 space-y-4">
             <div className="text-xs font-bold text-indigo-300 uppercase tracking-wider flex items-center space-x-2">
               <Shield className="w-4 h-4" />
               <span>Create Staff Profile & Assign Roles</span>
@@ -166,7 +166,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
+                <label className="block text-xs font-bold text-content-dim mb-1">
                   Full Name <span className="text-rose-400">*</span>
                 </label>
                 <input
@@ -175,12 +175,12 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Ramesh Chandra"
                   required
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full bg-panel border border-panel-line rounded-xl px-3 py-2 text-xs text-content focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
+                <label className="block text-xs font-bold text-content-dim mb-1">
                   Employee ID <span className="text-rose-400">*</span>
                 </label>
                 <input
@@ -189,12 +189,12 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                   onChange={(e) => setEmployeeId(e.target.value)}
                   placeholder="e.g. IKIO-OP-205"
                   required
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full bg-panel border border-panel-line rounded-xl px-3 py-2 text-xs text-content font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
+                <label className="block text-xs font-bold text-content-dim mb-1">
                   Email Address
                 </label>
                 <input
@@ -202,18 +202,18 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g. ramesh@ikioems.com"
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full bg-panel border border-panel-line rounded-xl px-3 py-2 text-xs text-content focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
+                <label className="block text-xs font-bold text-content-dim mb-1">
                   Assigned System Role <span className="text-rose-400">*</span>
                 </label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value as RoleType)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full bg-panel border border-panel-line rounded-xl px-3 py-2 text-xs text-content font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="Data Entry Staff">Data Entry Staff (Floor Operator)</option>
                   <option value="Production Supervisor">Production Supervisor</option>
@@ -224,13 +224,13 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
+                <label className="block text-xs font-bold text-content-dim mb-1">
                   Primary Shift
                 </label>
                 <select
                   value={shift}
                   onChange={(e) => setShift(e.target.value as ShiftType)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full bg-panel border border-panel-line rounded-xl px-3 py-2 text-xs text-content focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="Shift 1">Shift 1 (06:00 - 14:00)</option>
                   <option value="Shift 2">Shift 2 (14:00 - 22:00)</option>
@@ -239,7 +239,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
+                <label className="block text-xs font-bold text-content-dim mb-1">
                   Phone / Contact
                 </label>
                 <input
@@ -247,14 +247,14 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+91 98..."
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full bg-panel border border-panel-line rounded-xl px-3 py-2 text-xs text-content focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
             </div>
 
             {/* Line Allocation */}
             <div className="pt-2">
-              <label className="block text-xs font-bold text-slate-300 mb-1.5">
+              <label className="block text-xs font-bold text-content-dim mb-1.5">
                 Assigned Production Lines
               </label>
               <div className="flex flex-wrap items-center gap-2">
@@ -264,7 +264,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition ${
                     isAllLines 
                       ? 'bg-indigo-600 border-indigo-500 text-white' 
-                      : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-700'
+                      : 'bg-panel border-panel-line text-content-dim hover:bg-panel-high'
                   }`}
                 >
                   ALL Production Lines
@@ -278,7 +278,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition ${
                       assignedLines.includes(line)
                         ? 'bg-sky-600 border-sky-500 text-white'
-                        : 'bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-700'
+                        : 'bg-panel border-panel-line text-content-muted hover:bg-panel-high'
                     }`}
                   >
                     {line}
@@ -287,11 +287,11 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
               </div>
             </div>
 
-            <div className="flex justify-end space-x-2 pt-3 border-t border-slate-700/80">
+            <div className="flex justify-end space-x-2 pt-3 border-t border-panel-line/80">
               <button
                 type="button"
                 onClick={() => setShowAddForm(false)}
-                className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
+                className="px-4 py-2 rounded-xl bg-panel hover:bg-panel-high text-content-dim text-xs font-semibold"
               >
                 Cancel
               </button>
@@ -306,10 +306,10 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
         )}
 
         {/* Staff Table */}
-        <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900">
+        <div className="overflow-x-auto rounded-2xl glass-table">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-semibold bg-slate-800/40">
+              <tr className="border-b border-panel-line-subtle text-content-muted font-semibold bg-panel-raised/40">
                 <th className="py-3 px-4">Staff Member</th>
                 <th className="py-3 px-4">Employee ID</th>
                 <th className="py-3 px-4">Assigned Role</th>
@@ -319,17 +319,17 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/80">
+            <tbody className="divide-y divide-panel-line-subtle/80">
               {users.map((u) => (
-                <tr key={u.id} className="hover:bg-slate-800/30 transition">
+                <tr key={u.id} className="hover:bg-panel-raised/30 transition">
                   <td className="py-3 px-4">
                     <div className="flex items-center space-x-2.5">
                       <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-white text-xs ${u.avatarColor}`}>
                         {u.name.charAt(0)}
                       </div>
                       <div>
-                        <div className="font-semibold text-slate-200">{u.name}</div>
-                        <div className="text-[10px] text-slate-500">{u.email}</div>
+                        <div className="font-semibold text-content-soft">{u.name}</div>
+                        <div className="text-[10px] text-content-faint">{u.email}</div>
                       </div>
                     </div>
                   </td>
@@ -343,7 +343,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                       <select
                         defaultValue={u.role}
                         onChange={(e) => handleUpdateUserRole(u, e.target.value as RoleType)}
-                        className="bg-slate-800 border border-indigo-500 rounded-lg px-2 py-1 text-xs text-slate-100"
+                        className="bg-panel-raised border border-indigo-500 rounded-lg px-2 py-1 text-xs text-content"
                       >
                         <option value="Data Entry Staff">Data Entry Staff</option>
                         <option value="Production Supervisor">Production Supervisor</option>
@@ -374,7 +374,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                     ) : (
                       <div className="flex flex-wrap gap-1">
                         {u.assignedLines.map(l => (
-                          <span key={l} className="text-[9px] bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded border border-slate-700">
+                          <span key={l} className="text-[9px] bg-panel-raised text-content-dim px-1.5 py-0.5 rounded border border-panel-line">
                             {l}
                           </span>
                         ))}
@@ -382,7 +382,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                     )}
                   </td>
 
-                  <td className="py-3 px-4 text-slate-300 font-medium">
+                  <td className="py-3 px-4 text-content-dim font-medium">
                     {u.shift}
                   </td>
 
@@ -392,7 +392,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                       className={`px-2 py-0.5 rounded text-[10px] font-bold border transition ${
                         u.status === 'Active'
                           ? 'bg-emerald-950/80 text-emerald-300 border-emerald-700/60 hover:bg-emerald-900'
-                          : 'bg-slate-800 text-slate-500 border-slate-700'
+                          : 'bg-panel-raised text-content-faint border-panel-line'
                       }`}
                     >
                       {u.status}
@@ -403,7 +403,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                     <div className="flex items-center justify-end space-x-1.5">
                       <button
                         onClick={() => setEditingUserId(editingUserId === u.id ? null : u.id)}
-                        className="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
+                        className="p-1 rounded bg-panel-raised hover:bg-panel-high text-content-dim transition"
                         title="Edit role"
                       >
                         <Edit3 className="w-3.5 h-3.5" />
@@ -412,7 +412,7 @@ export const StaffManagementModal: React.FC<StaffManagementModalProps> = ({
                       {u.id !== currentUser.id && (
                         <button
                           onClick={() => handleDeleteUser(u.id)}
-                          className="p-1 rounded bg-slate-800 hover:bg-rose-950 text-slate-400 hover:text-rose-400 transition"
+                          className="p-1 rounded bg-panel-raised hover:bg-rose-950 text-content-muted hover:text-rose-400 transition"
                           title="Delete staff"
                         >
                           <Trash2 className="w-3.5 h-3.5" />

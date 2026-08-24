@@ -69,35 +69,35 @@ export const RoleSwitcherModal: React.FC<RoleSwitcherModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-      <div className="bg-slate-900 border border-slate-700 rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-5 text-slate-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-panel-deep/80 backdrop-blur-sm p-4">
+      <div className="bg-panel border border-panel-line rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-5 text-content">
         
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="flex items-center justify-between border-b border-panel-line-subtle pb-3">
           <div className="flex items-center space-x-2.5">
             <div className="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-sky-400">
               <Users className="w-4 h-4" />
             </div>
             <div>
               <h3 className="font-bold text-sm text-white">IKIO EMS Authentication & Role Switcher</h3>
-              <p className="text-[11px] text-slate-400">Switch profile to test Data Entry, Admin Oversight & Store flows</p>
+              <p className="text-[11px] text-content-muted">Switch profile to test Data Entry, Admin Oversight & Store flows</p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            className="p-1.5 rounded-lg text-content-muted hover:text-white hover:bg-panel-raised transition"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Tab Selection */}
-        <div className="flex space-x-2 bg-slate-800/80 p-1 rounded-xl border border-slate-700/60 text-xs">
+        <div className="flex space-x-2 bg-panel-raised/80 p-1 rounded-xl border border-panel-line/60 text-xs">
           <button
             onClick={() => setActiveTab('quick')}
             className={`flex-1 py-1.5 rounded-lg font-bold transition flex items-center justify-center space-x-1.5 ${
-              activeTab === 'quick' ? 'bg-sky-500 text-white shadow' : 'text-slate-400 hover:text-white'
+              activeTab === 'quick' ? 'bg-sky-500 text-white shadow' : 'text-content-muted hover:text-white'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -107,7 +107,7 @@ export const RoleSwitcherModal: React.FC<RoleSwitcherModalProps> = ({
           <button
             onClick={() => setActiveTab('login')}
             className={`flex-1 py-1.5 rounded-lg font-bold transition flex items-center justify-center space-x-1.5 ${
-              activeTab === 'login' ? 'bg-sky-500 text-white shadow' : 'text-slate-400 hover:text-white'
+              activeTab === 'login' ? 'bg-sky-500 text-white shadow' : 'text-content-muted hover:text-white'
             }`}
           >
             <Key className="w-3.5 h-3.5" />
@@ -129,8 +129,8 @@ export const RoleSwitcherModal: React.FC<RoleSwitcherModalProps> = ({
                   }}
                   className={`w-full text-left p-3 rounded-2xl border transition flex items-center justify-between group ${
                     isCurrent
-                      ? 'bg-slate-800 border-sky-500/60 ring-1 ring-sky-500/40'
-                      : 'bg-slate-800/40 border-slate-800 hover:bg-slate-800 hover:border-slate-700'
+                      ? 'bg-panel-raised border-sky-500/60 ring-1 ring-sky-500/40'
+                      : 'bg-panel-raised/40 border-panel-line-subtle hover:bg-panel-raised hover:border-panel-line'
                   }`}
                 >
                   <div className="flex items-center space-x-3">
@@ -139,14 +139,14 @@ export const RoleSwitcherModal: React.FC<RoleSwitcherModalProps> = ({
                     </div>
                     <div>
                       <div className="flex items-center space-x-2">
-                        <span className="font-bold text-xs text-slate-100">{user.name}</span>
-                        <span className="font-mono text-[10px] text-slate-400">({user.employeeId})</span>
+                        <span className="font-bold text-xs text-content">{user.name}</span>
+                        <span className="font-mono text-[10px] text-content-muted">({user.employeeId})</span>
                       </div>
                       <div className="flex items-center space-x-2 mt-0.5">
                         <span className={`px-2 py-0.5 rounded text-[9px] font-bold border ${getRoleBadgeStyle(user.role)}`}>
                           {user.role}
                         </span>
-                        <span className="text-[10px] text-slate-500">
+                        <span className="text-[10px] text-content-faint">
                           {user.assignedLines === 'ALL' ? 'All Lines' : `Lines: ${Array.isArray(user.assignedLines) ? user.assignedLines.join(', ') : ''}`}
                         </span>
                       </div>
@@ -160,7 +160,7 @@ export const RoleSwitcherModal: React.FC<RoleSwitcherModalProps> = ({
                         <span>Active</span>
                       </span>
                     ) : (
-                      <span className="text-xs text-slate-400 group-hover:text-white flex items-center space-x-1">
+                      <span className="text-xs text-content-muted group-hover:text-white flex items-center space-x-1">
                         <span>Select</span>
                         <ArrowRight className="w-3 h-3" />
                       </span>
@@ -182,7 +182,7 @@ export const RoleSwitcherModal: React.FC<RoleSwitcherModalProps> = ({
             )}
 
             <div>
-              <label className="block text-xs font-bold text-slate-300 mb-1">
+              <label className="block text-xs font-bold text-content-dim mb-1">
                 Employee ID or Email
               </label>
               <input
@@ -191,12 +191,12 @@ export const RoleSwitcherModal: React.FC<RoleSwitcherModalProps> = ({
                 onChange={(e) => setEmployeeIdInput(e.target.value)}
                 placeholder="e.g. IKIO-ADM-001 or IKIO-OP-201"
                 required
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-100 font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3.5 py-2.5 text-xs text-content font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-300 mb-1">
+              <label className="block text-xs font-bold text-content-dim mb-1">
                 Portal Password / PIN
               </label>
               <input
@@ -205,9 +205,9 @@ export const RoleSwitcherModal: React.FC<RoleSwitcherModalProps> = ({
                 onChange={(e) => setPasswordInput(e.target.value)}
                 placeholder="••••••••"
                 defaultValue="ikio2026"
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-100 font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3.5 py-2.5 text-xs text-content font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
-              <span className="text-[10px] text-slate-500 mt-1 block">Default demo PIN: any value or default accepted</span>
+              <span className="text-[10px] text-content-faint mt-1 block">Default demo PIN: any value or default accepted</span>
             </div>
 
             <button

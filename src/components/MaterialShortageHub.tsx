@@ -112,7 +112,7 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 space-y-6">
       
       {/* Top Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl text-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-panel border border-panel-line-subtle rounded-2xl p-5 shadow-xl text-content flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center space-x-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">
             <Package className="w-4 h-4" />
@@ -121,18 +121,18 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
           <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
             IKIO Electronics Bill of Materials & Line Shortage Control
           </h1>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-content-muted mt-0.5">
             Real-time material requisitions from SMT, MI, and FA lines with store buffer dispatch tracking
           </p>
         </div>
 
-        <div className="flex items-center space-x-2 bg-slate-800/90 p-1.5 rounded-xl border border-slate-700">
+        <div className="flex items-center space-x-2 bg-panel-raised/90 p-1.5 rounded-xl border border-panel-line">
           <button
             onClick={() => setActiveTab('shortages')}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 ${
               activeTab === 'shortages'
                 ? 'bg-amber-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                : 'text-content-muted hover:text-white'
             }`}
           >
             <AlertTriangle className="w-3.5 h-3.5" />
@@ -144,7 +144,7 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
             className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 ${
               activeTab === 'inventory'
                 ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                : 'text-content-muted hover:text-white'
             }`}
           >
             <Building2 className="w-3.5 h-3.5" />
@@ -184,14 +184,14 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
         <div className="space-y-4">
           
           {/* Filter Toolbar */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="bg-panel border border-panel-line-subtle rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="flex flex-wrap items-center gap-3">
               <div>
-                <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Severity</label>
+                <label className="block text-[10px] uppercase font-bold text-content-muted mb-1">Severity</label>
                 <select
                   value={filterSeverity}
                   onChange={(e) => setFilterSeverity(e.target.value)}
-                  className="bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-slate-200"
+                  className="bg-panel-raised border border-panel-line rounded-xl px-2.5 py-1.5 text-xs text-content-soft"
                 >
                   <option value="ALL">All Severities</option>
                   <option value="Critical (Line Stoppage)">Critical (Line Stop)</option>
@@ -202,11 +202,11 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Approval / Store Status</label>
+                <label className="block text-[10px] uppercase font-bold text-content-muted mb-1">Approval / Store Status</label>
                 <select
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
-                  className="bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-slate-200"
+                  className="bg-panel-raised border border-panel-line rounded-xl px-2.5 py-1.5 text-xs text-content-soft"
                 >
                   <option value="ALL">All Statuses</option>
                   <option value="Pending Approval">Pending Approval</option>
@@ -218,31 +218,31 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
             </div>
 
             <div className="w-full sm:w-64">
-              <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Search Part / Line</label>
+              <label className="block text-[10px] uppercase font-bold text-content-muted mb-1">Search Part / Line</label>
               <div className="relative">
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Part number, line..."
-                  className="w-full bg-slate-800 border border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-200"
+                  className="w-full bg-panel-raised border border-panel-line rounded-xl pl-8 pr-3 py-1.5 text-xs text-content-soft"
                 />
-                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2" />
+                <Search className="w-3.5 h-3.5 text-content-muted absolute left-2.5 top-2" />
               </div>
             </div>
           </div>
 
           {/* Shortage Cards Table */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+          <div className="glass-table rounded-2xl p-5">
             {filteredShortages.length === 0 ? (
-              <div className="text-center py-12 text-slate-500 text-xs">
+              <div className="text-center py-12 text-content-faint text-xs">
                 No material shortages match the active filter.
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-slate-800 text-slate-400 font-semibold bg-slate-800/40">
+                    <tr className="border-b border-panel-line-subtle text-content-muted font-semibold bg-panel-raised/40">
                       <th className="py-3 px-3">Part No. / Component</th>
                       <th className="py-3 px-3">Line & Sub-Line</th>
                       <th className="py-3 px-3 text-right">Shortage Qty</th>
@@ -253,25 +253,25 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
                       <th className="py-3 px-3 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/80">
+                  <tbody className="divide-y divide-panel-line-subtle/80">
                     {filteredShortages.map(({ shortage, entry }) => (
-                      <tr key={shortage.id} className="hover:bg-slate-800/30 transition">
+                      <tr key={shortage.id} className="hover:bg-panel-raised/30 transition">
                         <td className="py-3 px-3">
                           <div className="font-mono font-bold text-sky-400">{shortage.partNumber}</div>
-                          <div className="text-[11px] text-slate-400">{shortage.description}</div>
+                          <div className="text-[11px] text-content-muted">{shortage.description}</div>
                         </td>
 
                         <td className="py-3 px-3">
-                          <div className="font-bold text-slate-200">{entry.productionLine} — {entry.subLine}</div>
-                          <div className="text-[10px] text-slate-400">{entry.product}</div>
+                          <div className="font-bold text-content-soft">{entry.productionLine} — {entry.subLine}</div>
+                          <div className="text-[10px] text-content-muted">{entry.product}</div>
                         </td>
 
                         <td className="py-3 px-3 text-right font-mono font-bold text-amber-300">
-                          {shortage.shortageQty.toLocaleString()} <span className="text-[10px] font-normal text-slate-400">{shortage.unit}</span>
+                          {shortage.shortageQty.toLocaleString()} <span className="text-[10px] font-normal text-content-muted">{shortage.unit}</span>
                         </td>
 
-                        <td className="py-3 px-3 text-slate-300">
-                          <span className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-[10px]">
+                        <td className="py-3 px-3 text-content-dim">
+                          <span className="px-2 py-0.5 rounded bg-panel-raised border border-panel-line text-[10px]">
                             {shortage.reason}
                           </span>
                         </td>
@@ -282,15 +282,15 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
                               ? 'bg-rose-600 text-white animate-pulse'
                               : shortage.severity === 'High'
                               ? 'bg-amber-600 text-white'
-                              : 'bg-slate-800 text-slate-300 border border-slate-700'
+                              : 'bg-panel-raised text-content-dim border border-panel-line'
                           }`}>
                             {shortage.severity}
                           </span>
                         </td>
 
-                        <td className="py-3 px-3 text-slate-300">
-                          <div className="font-medium text-slate-200">{shortage.requestedBy}</div>
-                          <div className="text-[10px] text-slate-500">{shortage.requestedAt}</div>
+                        <td className="py-3 px-3 text-content-dim">
+                          <div className="font-medium text-content-soft">{shortage.requestedBy}</div>
+                          <div className="text-[10px] text-content-faint">{shortage.requestedAt}</div>
                         </td>
 
                         <td className="py-3 px-3 text-center">
@@ -306,7 +306,7 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
                             {shortage.status}
                           </span>
                           {shortage.reviewedBy && (
-                            <div className="text-[9px] text-slate-500 mt-0.5">by {shortage.reviewedBy}</div>
+                            <div className="text-[9px] text-content-faint mt-0.5">by {shortage.reviewedBy}</div>
                           )}
                         </td>
 
@@ -338,13 +338,13 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
 
       {/* Tab 2: Inventory BOM Matrix */}
       {activeTab === 'inventory' && (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="bg-panel border border-panel-line-subtle rounded-2xl p-5 shadow-xl space-y-4">
+          <div className="flex items-center justify-between border-b border-panel-line-subtle pb-3">
             <div>
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-200">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-content-soft">
                 Critical Component Stock & Safety Inventory
               </h2>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-content-muted">
                 Current stock balances, rack bins, and safety stock threshold warnings
               </p>
             </div>
@@ -359,12 +359,12 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
               return (
                 <div 
                   key={item.partNumber}
-                  className={`bg-slate-800/60 border rounded-2xl p-4 flex flex-col justify-between space-y-3 ${
+                  className={`bg-panel-raised/60 border rounded-2xl p-4 flex flex-col justify-between space-y-3 ${
                     isCritical 
                       ? 'border-rose-700/80 bg-rose-950/20' 
                       : isLow 
                       ? 'border-amber-700/60 bg-amber-950/10' 
-                      : 'border-slate-700/70'
+                      : 'border-panel-line/70'
                   }`}
                 >
                   <div>
@@ -381,22 +381,22 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
                       </span>
                     </div>
 
-                    <div className="font-semibold text-xs text-slate-100 mt-1">{item.name}</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">Loc: {item.location} • {item.supplier}</div>
+                    <div className="font-semibold text-xs text-content mt-1">{item.name}</div>
+                    <div className="text-[10px] text-content-muted mt-0.5">Loc: {item.location} • {item.supplier}</div>
                   </div>
 
-                  <div className="space-y-2 pt-2 border-t border-slate-700/60 text-xs font-mono">
+                  <div className="space-y-2 pt-2 border-t border-panel-line/60 text-xs font-mono">
                     <div className="flex justify-between">
-                      <span className="text-slate-400">On Hand:</span>
-                      <span className="font-bold text-slate-100">{item.currentStock.toLocaleString()} {item.unit}</span>
+                      <span className="text-content-muted">On Hand:</span>
+                      <span className="font-bold text-content">{item.currentStock.toLocaleString()} {item.unit}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Safety Min:</span>
-                      <span className="text-slate-300">{item.safetyStock.toLocaleString()} {item.unit}</span>
+                      <span className="text-content-muted">Safety Min:</span>
+                      <span className="text-content-dim">{item.safetyStock.toLocaleString()} {item.unit}</span>
                     </div>
                     
                     {/* Stock Progress Bar */}
-                    <div className="w-full h-1.5 rounded-full bg-slate-700 overflow-hidden">
+                    <div className="w-full h-1.5 rounded-full bg-panel-high overflow-hidden">
                       <div 
                         className={`h-full rounded-full ${
                           isCritical ? 'bg-rose-500' : isLow ? 'bg-amber-500' : 'bg-emerald-500'
@@ -414,44 +414,44 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
 
       {/* Dispatch Modal */}
       {dispatchTarget && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-          <div className="bg-slate-900 border border-sky-500 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 text-slate-100">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-panel-deep/80 backdrop-blur-sm p-4">
+          <div className="bg-panel border border-sky-500 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 text-content">
+            <div className="flex items-center justify-between border-b border-panel-line-subtle pb-3">
               <div className="flex items-center space-x-2 text-sky-400 font-bold text-sm">
                 <Send className="w-4 h-4" />
                 <span>Confirm Material Issue & Dispatch</span>
               </div>
               <button
                 onClick={() => setDispatchTarget(null)}
-                className="text-slate-400 hover:text-white text-xs"
+                className="text-content-muted hover:text-white text-xs"
               >
                 ✕
               </button>
             </div>
 
-            <div className="bg-slate-800 p-3 rounded-xl border border-slate-700 text-xs space-y-1.5">
+            <div className="bg-panel-raised p-3 rounded-xl border border-panel-line text-xs space-y-1.5">
               <div className="flex justify-between">
-                <span className="text-slate-400">Component:</span>
+                <span className="text-content-muted">Component:</span>
                 <span className="font-mono font-bold text-sky-400">{dispatchTarget.shortage.partNumber}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Dispatch Qty:</span>
+                <span className="text-content-muted">Dispatch Qty:</span>
                 <span className="font-mono font-bold text-amber-300">{dispatchTarget.shortage.shortageQty} {dispatchTarget.shortage.unit}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Target Line:</span>
-                <span className="font-bold text-slate-200">Requisition for floor</span>
+                <span className="text-content-muted">Target Line:</span>
+                <span className="font-bold text-content-soft">Requisition for floor</span>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-300 mb-1">Store Dispatch Remarks</label>
+              <label className="block text-xs font-bold text-content-dim mb-1">Store Dispatch Remarks</label>
               <input
                 type="text"
                 value={dispatchRemarks}
                 onChange={(e) => setDispatchRemarks(e.target.value)}
                 placeholder="e.g. Issued from Bay SMT-A-04. Delivered to operator by store runner."
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100"
+                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3 py-2 text-xs text-content"
               />
             </div>
 
@@ -459,7 +459,7 @@ export const MaterialShortageHub: React.FC<MaterialShortageHubProps> = ({
               <button
                 type="button"
                 onClick={() => setDispatchTarget(null)}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
+                className="px-4 py-2 rounded-xl bg-panel-raised hover:bg-panel-high text-content-dim text-xs font-semibold"
               >
                 Cancel
               </button>

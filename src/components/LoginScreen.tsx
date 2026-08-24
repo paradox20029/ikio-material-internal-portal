@@ -58,11 +58,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#173d26] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
       
       {/* Background Subtle Ambience */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#368453]/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-72 h-72 bg-[#2d6e45]/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-72 h-72 bg-line-strong/20 rounded-full blur-3xl pointer-events-none" />
 
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center z-10">
@@ -81,10 +81,10 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
 
       {/* Login Card */}
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0 z-10">
-        <div className="bg-[#122e1d] border border-[#27633e] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+        <div className="bg-surface-deep border border-line rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
           
-          <div className="border-b border-[#245938] pb-4">
-            <h2 className="text-sm font-bold text-slate-100 flex items-center space-x-2">
+          <div className="border-b border-line-subtle pb-4">
+            <h2 className="text-sm font-bold text-content flex items-center space-x-2">
               <Lock className="w-4 h-4 text-emerald-400" />
               <span>Staff Authentication Gate</span>
             </h2>
@@ -103,7 +103,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
           {/* Login Form */}
           <form onSubmit={handleFormLogin} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-slate-200 mb-1.5">
+              <label className="block text-xs font-bold text-content-soft mb-1.5">
                 Employee ID or Email Address
               </label>
               <div className="relative">
@@ -114,14 +114,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                   onChange={(e) => setEmployeeIdOrEmail(e.target.value)}
                   placeholder="e.g. IKIO-ADM-001 or admin@ikioems.com"
                   required
-                  className="w-full bg-[#1b432a] border border-[#2d6d45] rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-100 font-mono focus:outline-none focus:ring-2 focus:ring-[#368453] focus:border-transparent placeholder:text-emerald-300/40"
+                  className="w-full bg-surface border border-line-strong rounded-xl pl-9 pr-3 py-2.5 text-xs text-content font-mono focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent placeholder:text-emerald-300/40"
                 />
                 <UserIcon className="w-4 h-4 text-emerald-400 absolute left-3 top-3" />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-200 mb-1.5 flex justify-between">
+              <label className="block text-xs font-bold text-content-soft mb-1.5 flex justify-between">
                 <span>Password</span>
               </label>
               <div className="relative">
@@ -133,7 +133,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                   placeholder="••••••••"
                   required
                   autoComplete="current-password"
-                  className="w-full bg-[#1b432a] border border-[#2d6d45] rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-100 font-mono focus:outline-none focus:ring-2 focus:ring-[#368453] focus:border-transparent"
+                  className="w-full bg-surface border border-line-strong rounded-xl pl-9 pr-3 py-2.5 text-xs text-content font-mono focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                 />
                 <Key className="w-4 h-4 text-emerald-400 absolute left-3 top-3" />
               </div>
@@ -143,7 +143,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
               id="btn-submit-login"
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3 rounded-xl bg-[#368453] hover:bg-[#3f9961] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-xs shadow-lg shadow-[#368453]/25 transition cursor-pointer flex items-center justify-center space-x-2"
+              className="w-full py-3 rounded-xl bg-accent hover:bg-accent-hover disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-xs shadow-lg shadow-accent/25 transition cursor-pointer flex items-center justify-center space-x-2"
             >
               <span>{isSubmitting ? 'Signing In…' : 'Sign In to Plant Console'}</span>
               {!isSubmitting && <ArrowRight className="w-4 h-4" />}
@@ -153,10 +153,10 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
           {/* Google sign-in: staff accounts are Google Workspace / Gmail based */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center" aria-hidden="true">
-              <div className="w-full border-t border-[#245938]" />
+              <div className="w-full border-t border-line-subtle" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-[#122e1d] px-3 text-[10px] uppercase tracking-wider text-emerald-300/60 font-bold">
+              <span className="bg-surface-deep px-3 text-[10px] uppercase tracking-wider text-emerald-300/60 font-bold">
                 or
               </span>
             </div>
@@ -167,7 +167,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
             type="button"
             onClick={handleGoogleLogin}
             disabled={isSubmitting}
-            className="w-full py-3 rounded-xl bg-white hover:bg-slate-100 disabled:opacity-60 disabled:cursor-not-allowed text-slate-800 font-bold text-xs shadow-lg transition cursor-pointer flex items-center justify-center space-x-2.5"
+            className="w-full py-3 rounded-xl bg-white hover:bg-n-100 disabled:opacity-60 disabled:cursor-not-allowed text-n-800 font-bold text-xs shadow-lg transition cursor-pointer flex items-center justify-center space-x-2.5"
           >
             <svg className="w-4 h-4" viewBox="0 0 48 48" aria-hidden="true">
               <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
