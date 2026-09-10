@@ -4,13 +4,16 @@ import {
   InventoryComponent, 
   LiveAlert, 
   MaterialShortageItem,
-  ApprovalStatus 
+  ApprovalStatus,
+  WorkOrder,
+  WorkOrderProgress
 } from '../types';
 import { 
   INITIAL_USERS, 
   INITIAL_PRODUCTION_ENTRIES, 
   INITIAL_INVENTORY, 
-  INITIAL_ALERTS 
+  INITIAL_ALERTS,
+  INITIAL_WORK_ORDERS
 } from '../data/initialData';
 import { FirebaseService } from './firebase';
 
@@ -19,6 +22,7 @@ const STORAGE_KEYS = {
   PRODUCTION_ENTRIES: 'ikio_ems_production_entries_v1',
   INVENTORY: 'ikio_ems_inventory_v1',
   ALERTS: 'ikio_ems_alerts_v1',
+  WORK_ORDERS: 'ikio_ems_work_orders_v1',
   CURRENT_USER: 'ikio_ems_current_user_v1',
   SOUND_ENABLED: 'ikio_ems_sound_enabled_v1'
 };
@@ -55,17 +59,31 @@ export const notifyStateChange = () => {
   }
 };
 
-// Helper to enrich legacy/cached entries with Work Order and Role if missing
+/*
+ * Backfills fields that older cached entries predate.
+ *
+ * Work order: entries created before work orders existed have no link. Rather
+ * than invent a number, we resolve the *real* order for that product and line
+ * — and leave it unset when there genuinely isn't one, so the table shows a
+ * dash instead of a fabricated ID.
+ */
 export const enrichProductionEntry = (entry: ProductionEntry): ProductionEntry => {
-  let workOrder = entry.workOrderNumber;
-  if (!workOrder) {
-    if (entry.productCode?.includes('REFRIG') || entry.product?.includes('Refrigeration')) workOrder = 'WO-2026-REF-089';
-    else if (entry.productCode?.includes('HB-150W') || entry.product?.includes('High-Bay')) workOrder = 'WO-2026-LUM-104';
-    else if (entry.productCode?.includes('WAVE') || entry.product?.includes('Wave Solder')) workOrder = 'WO-2026-MIF-042';
-    else if (entry.productCode?.includes('DRV') || entry.product?.includes('Driver')) workOrder = 'WO-2026-MI-310';
-    else if (entry.productCode?.includes('BLE') || entry.product?.includes('Bluetooth')) workOrder = 'WO-2026-SMT-715';
-    else if (entry.productCode?.includes('STR') || entry.product?.includes('Streetlight')) workOrder = 'WO-2026-SMT-714';
-    else workOrder = `WO-2026-PRD-${entry.id ? entry.id.slice(-4).toUpperCase() : '101'}`;
+  // Read unconditionally: this is also what seeds the work order store on a
+  // cold start. Gating it behind the missing-link check meant a fully linked
+  // seed never populated the orders at all.
+  const orders = readWorkOrders();
+
+  let workOrderId = entry.workOrderId;
+  let workOrderNumber = entry.workOrderNumber;
+
+  if (!workOrderId) {
+    const match = orders.find(
+      wo => wo.productCode === entry.productCode && wo.productionLine === entry.productionLine
+    );
+    if (match) {
+      workOrderId = match.id;
+      workOrderNumber = match.workOrderNumber;
+    }
   }
 
   let role = entry.enteredByRole;
@@ -76,7 +94,22 @@ export const enrichProductionEntry = (entry: ProductionEntry): ProductionEntry =
     else role = 'Data Entry Staff';
   }
 
-  return { ...entry, workOrderNumber: workOrder, enteredByRole: role };
+  return { ...entry, workOrderId, workOrderNumber, enteredByRole: role };
+};
+
+// Read without going through StorageService, so enrich can use it before the
+// service object is constructed.
+const readWorkOrders = (): WorkOrder[] => {
+  try {
+    const data = localStorage.getItem(STORAGE_KEYS.WORK_ORDERS);
+    if (!data) {
+      localStorage.setItem(STORAGE_KEYS.WORK_ORDERS, JSON.stringify(INITIAL_WORK_ORDERS));
+      return INITIAL_WORK_ORDERS;
+    }
+    return JSON.parse(data);
+  } catch {
+    return INITIAL_WORK_ORDERS;
+  }
 };
 
 // Setup Firestore real-time cloud sync
@@ -102,7 +135,13 @@ export const initFirestoreSync = () => {
     notifyStateChange();
   });
 
-  // 3. Subscribe to Inventory from Firestore
+  // 3. Subscribe to Work Orders from Firestore
+  FirebaseService.subscribeWorkOrders((remoteOrders) => {
+    localStorage.setItem(STORAGE_KEYS.WORK_ORDERS, JSON.stringify(remoteOrders));
+    notifyStateChange();
+  });
+
+  // 4. Subscribe to Inventory from Firestore
   FirebaseService.subscribeInventory((remoteInventory) => {
     localStorage.setItem(STORAGE_KEYS.INVENTORY, JSON.stringify(remoteInventory));
     notifyStateChange();
@@ -366,6 +405,53 @@ export const StorageService = {
     }
 
     notifyStateChange();
+  },
+
+  // Work Orders
+  getWorkOrders(): WorkOrder[] {
+    return readWorkOrders();
+  },
+
+  /*
+   * Progress is computed from production entries every time rather than stored
+   * on the order, so it cannot drift out of sync with the runs. Status is
+   * likewise derived: an order is Completed once its runs meet the plan.
+   */
+  getWorkOrderProgress(): WorkOrderProgress[] {
+    const entries = this.getProductionEntries();
+    const today = new Date().toISOString().split('T')[0];
+
+    return readWorkOrders().map(workOrder => {
+      const runs = entries.filter(e => e.workOrderId === workOrder.id);
+      const achievedQty = runs.reduce((sum, e) => sum + (e.achieved || 0), 0);
+      const completionPercent = workOrder.plannedQty > 0
+        ? Number(((achievedQty / workOrder.plannedQty) * 100).toFixed(1))
+        : 0;
+
+      return {
+        workOrder: {
+          ...workOrder,
+          status: achievedQty >= workOrder.plannedQty
+            ? 'Completed'
+            : achievedQty > 0
+              ? 'In Progress'
+              : workOrder.status
+        },
+        achievedQty,
+        runCount: runs.length,
+        completionPercent,
+        remainingQty: Math.max(0, workOrder.plannedQty - achievedQty),
+        isOverdue: achievedQty < workOrder.plannedQty && workOrder.dueDate < today
+      };
+    });
+  },
+
+  /* Orders still needing output, for the entry form's dropdown. */
+  getOpenWorkOrders(line?: string): WorkOrder[] {
+    return this.getWorkOrderProgress()
+      .filter(p => p.workOrder.status !== 'Completed' && p.workOrder.status !== 'Closed Short')
+      .filter(p => !line || p.workOrder.productionLine === line)
+      .map(p => p.workOrder);
   },
 
   // Inventory Stock

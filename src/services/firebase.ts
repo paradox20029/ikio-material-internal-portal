@@ -17,13 +17,15 @@ import {
   ProductionEntry, 
   InventoryComponent, 
   LiveAlert, 
-  ApprovalStatus 
+  ApprovalStatus,
+  WorkOrder
 } from '../types';
 import { 
   INITIAL_USERS, 
   INITIAL_PRODUCTION_ENTRIES, 
   INITIAL_INVENTORY, 
-  INITIAL_ALERTS 
+  INITIAL_ALERTS,
+  INITIAL_WORK_ORDERS
 } from '../data/initialData';
 
 // Initialize Firebase App
@@ -58,6 +60,7 @@ const USERS_COLLECTION = 'users';
 const PRODUCTION_COLLECTION = 'production_entries';
 const INVENTORY_COLLECTION = 'inventory';
 const ALERTS_COLLECTION = 'alerts';
+const WORK_ORDERS_COLLECTION = 'work_orders';
 
 // Audio chime helper
 const playChime = (type: 'info' | 'warning' | 'critical' | 'success' = 'info') => {
@@ -180,6 +183,19 @@ export const FirebaseService = {
       }
     }, (err) => {
       console.warn('Production Firestore listener error:', err);
+    });
+  },
+
+  subscribeWorkOrders(onUpdate: (orders: WorkOrder[]) => void) {
+    const q = collection(db, WORK_ORDERS_COLLECTION);
+    return onSnapshot(q, (snapshot) => {
+      if (!snapshot.empty) {
+        onUpdate(snapshot.docs.map(d => d.data() as WorkOrder));
+      } else {
+        onUpdate(INITIAL_WORK_ORDERS);
+      }
+    }, (err) => {
+      console.warn('Work Orders Firestore listener error:', err);
     });
   },
 

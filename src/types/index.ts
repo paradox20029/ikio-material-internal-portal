@@ -55,6 +55,41 @@ export interface MaterialShortageItem {
   lineStoppageRisk: boolean;
 }
 
+/*
+ * A work order is one planned production job: make N of this product, on this
+ * line, by this date. Production runs are logged *against* a work order, and
+ * its progress is the sum of what those runs achieved.
+ *
+ * These are seeded locally today. When IKIO's ERP becomes the source of truth,
+ * replace the seed with an import and treat these records as read-only
+ * mirrors — the shape is deliberately close to a typical ERP work order.
+ */
+export type WorkOrderStatus = 'Open' | 'In Progress' | 'Completed' | 'Closed Short';
+
+export interface WorkOrder {
+  id: string;
+  workOrderNumber: string;      // human-facing, e.g. WO-2026-SMT-0412
+  product: string;
+  productCode: string;
+  productionLine: ProductionLine;
+  plannedQty: number;
+  dueDate: string;              // YYYY-MM-DD
+  priority: 'Normal' | 'High' | 'Urgent';
+  status: WorkOrderStatus;
+  raisedBy: string;
+  createdAt: string;
+}
+
+/* Progress is derived from production entries, never stored on the order. */
+export interface WorkOrderProgress {
+  workOrder: WorkOrder;
+  achievedQty: number;
+  runCount: number;
+  completionPercent: number;
+  remainingQty: number;
+  isOverdue: boolean;
+}
+
 export interface ProductionEntry {
   id: string;
   date: string;
@@ -63,7 +98,8 @@ export interface ProductionEntry {
   subLine: string;
   product: string;
   productCode: string;
-  workOrderNumber?: string;
+  workOrderId?: string;         // FK into work_orders
+  workOrderNumber?: string;     // denormalised for display/export
   plan: number;
   achieved: number;
   manpowerUsed: number;

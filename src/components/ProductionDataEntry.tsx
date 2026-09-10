@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Plus, 
   Trash2, 
@@ -46,6 +46,7 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
   const [subLine, setSubLine] = useState<string>('Line 1');
   const [productName, setProductName] = useState<string>('');
   const [productCode, setProductCode] = useState<string>('');
+  const [workOrderId, setWorkOrderId] = useState<string>('');
   
   const [plan, setPlan] = useState<number | ''>(1200);
   const [achieved, setAchieved] = useState<number | ''>(1150);
@@ -75,6 +76,36 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
   const [submittedBanner, setSubmittedBanner] = useState<string | null>(null);
 
   // Available sub-lines and products for current line configuration
+  /*
+   * Runs are logged against a work order, so the operator picks the job first
+   * and the product follows from it. Only orders for the selected line and
+   * still short of their planned quantity are offered.
+   */
+  const openWorkOrders = useMemo(
+    () => StorageService.getOpenWorkOrders(productionLine),
+    [productionLine]
+  );
+
+  const handleWorkOrderChange = (id: string) => {
+    setWorkOrderId(id);
+    const order = openWorkOrders.find(w => w.id === id);
+    if (!order) return;
+    // The order dictates what is being built; keep product in step with it.
+    setProductName(order.product);
+    setProductCode(order.productCode);
+    const config = LINE_CONFIGURATIONS[order.productionLine]
+      ?.defaultProducts.find(pr => pr.code === order.productCode);
+    if (config) {
+      setManpowerUsed(config.standardManpower);
+      setPlan(config.targetPerHour * 8);
+    }
+  };
+
+  const selectedWorkOrderProgress = useMemo(
+    () => StorageService.getWorkOrderProgress().find(p => p.workOrder.id === workOrderId) || null,
+    [workOrderId]
+  );
+
   const currentLineConfig = LINE_CONFIGURATIONS[productionLine];
   const availableSubLines = currentLineConfig?.subLines || ['Line 1', 'Line 2'];
   const availableProducts = currentLineConfig?.defaultProducts || [];
@@ -84,6 +115,13 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
     if (availableSubLines.length > 0) {
       setSubLine(availableSubLines[0]);
     }
+    // Default to the first open work order on this line, if there is one.
+    if (openWorkOrders.length > 0) {
+      handleWorkOrderChange(openWorkOrders[0].id);
+    } else {
+      setWorkOrderId('');
+    }
+
     if (availableProducts.length > 0) {
       setProductName(availableProducts[0].name);
       setProductCode(availableProducts[0].code);
@@ -177,6 +215,8 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
         subLine,
         product: productName,
         productCode: productCode || 'IK-PROD-GENERIC',
+        workOrderId: workOrderId || undefined,
+        workOrderNumber: openWorkOrders.find(w => w.id === workOrderId)?.workOrderNumber,
         plan: numericPlan,
         achieved: numericAchieved,
         manpowerUsed: numericManpower,
@@ -367,7 +407,45 @@ export const ProductionDataEntry: React.FC<ProductionDataEntryProps> = ({
               </select>
             </div>
 
-            {/* 5. Product Dropdown (Filtered by selected Line) */}
+            {/* 5. Work Order — the job this run is booked against */}
+            <div className="lg:col-span-2">
+              <label htmlFor="field-work-order" className="block text-xs font-bold text-content-dim mb-1.5">
+                Work Order <span className="text-rose-400">*</span>
+              </label>
+              {openWorkOrders.length > 0 ? (
+                <>
+                  <select
+                    id="field-work-order"
+                    value={workOrderId}
+                    onChange={(e) => handleWorkOrderChange(e.target.value)}
+                    className="w-full bg-panel-raised border border-emerald-500/60 rounded-xl px-3.5 py-2.5 text-xs text-emerald-300 font-bold font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  >
+                    {openWorkOrders.map((wo) => (
+                      <option key={wo.id} value={wo.id}>
+                        {wo.workOrderNumber} — {wo.product} (due {wo.dueDate})
+                      </option>
+                    ))}
+                  </select>
+                  {selectedWorkOrderProgress && (
+                    <p className="mt-1.5 text-[11px] text-content-faint">
+                      {selectedWorkOrderProgress.achievedQty.toLocaleString()} of{' '}
+                      {selectedWorkOrderProgress.workOrder.plannedQty.toLocaleString()} built
+                      {' '}({selectedWorkOrderProgress.completionPercent}%) ·{' '}
+                      <span className={selectedWorkOrderProgress.isOverdue ? 'text-rose-400 font-bold' : 'text-content-faint'}>
+                        {selectedWorkOrderProgress.remainingQty.toLocaleString()} remaining
+                        {selectedWorkOrderProgress.isOverdue && ' · OVERDUE'}
+                      </span>
+                    </p>
+                  )}
+                </>
+              ) : (
+                <p className="w-full bg-panel-raised border border-amber-600/50 rounded-xl px-3.5 py-2.5 text-xs text-amber-300">
+                  No open work orders for {productionLine}. This run will be logged without one.
+                </p>
+              )}
+            </div>
+
+            {/* 6. Product — driven by the work order, shown for confirmation */}
             <div className="lg:col-span-2">
               <label htmlFor="field-product" className="block text-xs font-bold text-content-dim mb-1.5">
                 Product / Model Selection <span className="text-rose-400">*</span>

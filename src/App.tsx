@@ -14,6 +14,7 @@ import { Navbar } from './components/Navbar';
 import { LoginScreen } from './components/LoginScreen';
 import { ProductionDataEntry } from './components/ProductionDataEntry';
 import { AdminDashboard } from './components/AdminDashboard';
+import { WorkOrderBoard } from './components/WorkOrderBoard';
 import { ProductionDataTable } from './components/ProductionDataTable';
 import { MaterialShortageHub } from './components/MaterialShortageHub';
 import { StaffManagementModal } from './components/StaffManagementModal';
@@ -42,7 +43,7 @@ export default function App() {
   const [alerts, setAlerts] = useState<LiveAlert[]>(() => StorageService.getAlerts());
   
   // Navigation active tab
-  const [activeTab, setActiveTab] = useState<'entry' | 'dashboard' | 'logs' | 'shortages' | 'inventory'>('entry');
+  const [activeTab, setActiveTab] = useState<'entry' | 'workorders' | 'dashboard' | 'logs' | 'shortages' | 'inventory'>('entry');
   
   // Modals & Drawers
   const [isStaffManagerOpen, setIsStaffManagerOpen] = useState<boolean>(false);
@@ -192,6 +193,8 @@ export default function App() {
             onNavigateToDashboard={() => setActiveTab('dashboard')}
           />
         )}
+
+        {activeTab === 'workorders' && <WorkOrderBoard />}
 
         {activeTab === 'dashboard' && (
           <AdminDashboard
