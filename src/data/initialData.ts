@@ -296,7 +296,7 @@ export const INITIAL_USERS: User[] = [
     id: 'usr-admin-anupam',
     name: 'Anupam De',
     employeeId: 'IKIO-ADM-004',
-    email: 'anupam.de@royalux.com',
+    email: 'anupam.de@royalux.in',
     role: 'Administrator',
     assignedLines: 'ALL',
     shift: 'Shift 1',
