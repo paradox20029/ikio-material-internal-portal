@@ -18,12 +18,36 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    /*
+     * Demo accounts, provisioned by hand in the Firebase console so the
+     * Data Entry and Quality Inspector views can be shown to stakeholders.
+     * They are exempt from the email_verified check below: console-created
+     * password accounts land with emailVerified=false and there is no way to
+     * flip that from the console UI. Real staff sign in with Google, which
+     * sets the flag, so they keep the stricter check.
+     *
+     * These two addresses are on a domain IKIO does not control. Their only
+     * protection is that the accounts already exist (a taken email cannot be
+     * re-registered) and that they appear on the allowlist below. Delete the
+     * account and the address becomes claimable by anyone while signup is
+     * open -- so remove it from the allowlist at the same time.
+     */
+    function isDemoAccount() {
+      return request.auth.token.email in [
+               'pooja.rawat@ikioems.com',
+               'sunita.mehra@ikioems.com'
+             ];
+    }
+
     function isStaff() {
       return request.auth != null
-        && request.auth.token.email_verified == true
+        && (request.auth.token.email_verified == true || isDemoAccount())
         && request.auth.token.email in [
              'armaan20029@gmail.com',
-             'nppokh@gmail.com'
+             'nppokh@gmail.com',
+             'anupam.de@royalux.com',
+             'pooja.rawat@ikioems.com',
+             'sunita.mehra@ikioems.com'
            ];
     }
 
@@ -34,6 +58,11 @@ service cloud.firestore {
 
     // Shift production runs, including embedded material shortages
     match /production_entries/{entryId} {
+      allow read, write: if isStaff();
+    }
+
+    // Planned production jobs
+    match /work_orders/{workOrderId} {
       allow read, write: if isStaff();
     }
 

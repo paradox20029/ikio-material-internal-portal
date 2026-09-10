@@ -4,7 +4,8 @@ import {
   User, 
   InventoryComponent, 
   LiveAlert,
-  ProductionLine 
+  ProductionLine ,
+  WorkOrder
 } from '../types';
 
 export const LINE_CONFIGURATIONS: Record<ProductionLine, LineMapping> = {
@@ -159,6 +160,110 @@ export const LINE_CONFIGURATIONS: Record<ProductionLine, LineMapping> = {
   }
 };
 
+
+/*
+ * Seeded work orders. Each corresponds to a real planned job and is what
+ * production runs are logged against. plannedQty is deliberately larger than
+ * any single shift's output so orders span multiple runs — that is what makes
+ * the progress roll-up meaningful.
+ *
+ * Replace this array with an ERP import when real work orders exist; nothing
+ * else needs to change, because progress is always derived from the runs.
+ */
+export const INITIAL_WORK_ORDERS: WorkOrder[] = [
+  {
+    id: 'wo-001',
+    workOrderNumber: 'WO-2026-SMT-0412',
+    product: 'LED Driver Controller Board 40W',
+    productCode: 'IK-SMT-DRV-40W',
+    productionLine: 'SMT',
+    plannedQty: 5000,
+    dueDate: '2026-08-28',
+    priority: 'High',
+    status: 'In Progress',
+    raisedBy: 'Rajesh Sharma',
+    createdAt: '2026-08-17'
+  },
+  {
+    id: 'wo-002',
+    workOrderNumber: 'WO-2026-SMT-0418',
+    product: 'Commercial High-Bay SMT Array 150W',
+    productCode: 'IK-SMT-HB-150W',
+    productionLine: 'SMT',
+    plannedQty: 3000,
+    dueDate: '2026-08-30',
+    priority: 'Normal',
+    status: 'In Progress',
+    raisedBy: 'Rajesh Sharma',
+    createdAt: '2026-08-18'
+  },
+  {
+    id: 'wo-003',
+    workOrderNumber: 'WO-2026-MI-0207',
+    product: 'Manual Insertion - Driver Power Stage 40W',
+    productCode: 'IK-MI-DRV-40W',
+    productionLine: 'MI',
+    plannedQty: 4000,
+    dueDate: '2026-08-27',
+    priority: 'High',
+    status: 'In Progress',
+    raisedBy: 'Amit Verma',
+    createdAt: '2026-08-17'
+  },
+  {
+    id: 'wo-004',
+    workOrderNumber: 'WO-2026-MIF-0103',
+    product: 'Lead Cropping & Wave Solder Touchup 40W',
+    productCode: 'IK-MIF-TOUCH-40',
+    productionLine: 'MI-Finishing',
+    plannedQty: 4000,
+    dueDate: '2026-08-26',
+    priority: 'Normal',
+    status: 'In Progress',
+    raisedBy: 'Amit Verma',
+    createdAt: '2026-08-17'
+  },
+  {
+    id: 'wo-005',
+    workOrderNumber: 'WO-2026-FAL-0356',
+    product: 'High-Bay Luminaire 150W IP65 Complete',
+    productCode: 'IK-FAL-HB-150W',
+    productionLine: 'FA-Lum',
+    plannedQty: 2000,
+    dueDate: '2026-08-25',
+    priority: 'Urgent',
+    status: 'In Progress',
+    raisedBy: 'Rajesh Sharma',
+    createdAt: '2026-08-16'
+  },
+  {
+    id: 'wo-006',
+    workOrderNumber: 'WO-2026-FAR-0089',
+    product: 'Refrigeration Linear Luminaire 24V Cold-Rated',
+    productCode: 'IK-FAR-REFRIG-24V',
+    productionLine: 'FA-Ref',
+    plannedQty: 1500,
+    dueDate: '2026-08-29',
+    priority: 'Normal',
+    status: 'In Progress',
+    raisedBy: 'Rajesh Sharma',
+    createdAt: '2026-08-18'
+  },
+  {
+    id: 'wo-007',
+    workOrderNumber: 'WO-2026-SMT-0421',
+    product: 'Downlight Constant Current Engine 18W',
+    productCode: 'IK-SMT-DL-18W',
+    productionLine: 'SMT',
+    plannedQty: 6000,
+    dueDate: '2026-09-02',
+    priority: 'Normal',
+    status: 'Open',
+    raisedBy: 'Rajesh Sharma',
+    createdAt: '2026-08-21'
+  }
+];
+
 export const INITIAL_USERS: User[] = [
   // Real IKIO staff accounts. These are the only two with Firebase Auth
   // logins provisioned; the demo staff below exist so the seeded production
@@ -186,6 +291,18 @@ export const INITIAL_USERS: User[] = [
     status: 'Active',
     lastActive: 'Just now',
     avatarColor: 'bg-amber-600'
+  },
+  {
+    id: 'usr-admin-anupam',
+    name: 'Anupam De',
+    employeeId: 'IKIO-ADM-004',
+    email: 'anupam.de@royalux.com',
+    role: 'Administrator',
+    assignedLines: 'ALL',
+    shift: 'Shift 1',
+    status: 'Active',
+    lastActive: 'Just now',
+    avatarColor: 'bg-sky-600'
   },
   {
     id: 'usr-admin-01',
@@ -375,6 +492,8 @@ export const INITIAL_PRODUCTION_ENTRIES: ProductionEntry[] = [
     subLine: 'Line 1',
     product: 'LED Driver Controller Board 40W',
     productCode: 'IK-SMT-DRV-40W',
+    workOrderId: 'wo-001',
+    workOrderNumber: 'WO-2026-SMT-0412',
     plan: 1400,
     achieved: 1320,
     manpowerUsed: 6,
@@ -422,6 +541,8 @@ export const INITIAL_PRODUCTION_ENTRIES: ProductionEntry[] = [
     subLine: 'Line 2',
     product: 'Commercial High-Bay SMT Array 150W',
     productCode: 'IK-SMT-HB-150W',
+    workOrderId: 'wo-002',
+    workOrderNumber: 'WO-2026-SMT-0418',
     plan: 900,
     achieved: 880,
     manpowerUsed: 8,
@@ -448,6 +569,8 @@ export const INITIAL_PRODUCTION_ENTRIES: ProductionEntry[] = [
     subLine: 'Line 1',
     product: 'Manual Insertion - Driver Power Stage 40W',
     productCode: 'IK-MI-DRV-40W',
+    workOrderId: 'wo-003',
+    workOrderNumber: 'WO-2026-MI-0207',
     plan: 1100,
     achieved: 1040,
     manpowerUsed: 12,
@@ -474,6 +597,8 @@ export const INITIAL_PRODUCTION_ENTRIES: ProductionEntry[] = [
     subLine: 'Line 1',
     product: 'Lead Cropping & Wave Solder Touchup 40W',
     productCode: 'IK-MIF-TOUCH-40',
+    workOrderId: 'wo-004',
+    workOrderNumber: 'WO-2026-MIF-0103',
     plan: 1200,
     achieved: 1160,
     manpowerUsed: 8,
@@ -497,6 +622,8 @@ export const INITIAL_PRODUCTION_ENTRIES: ProductionEntry[] = [
     subLine: 'High-Bay Assembly',
     product: 'High-Bay Luminaire 150W IP65 Complete',
     productCode: 'IK-FAL-HB-150W',
+    workOrderId: 'wo-005',
+    workOrderNumber: 'WO-2026-FAL-0356',
     plan: 500,
     achieved: 380,
     manpowerUsed: 14,
@@ -539,6 +666,8 @@ export const INITIAL_PRODUCTION_ENTRIES: ProductionEntry[] = [
     subLine: 'Line 2',
     product: 'Refrigeration Linear Luminaire 24V Cold-Rated',
     productCode: 'IK-FAR-REFRIG-24V',
+    workOrderId: 'wo-006',
+    workOrderNumber: 'WO-2026-FAR-0089',
     plan: 650,
     achieved: 630,
     manpowerUsed: 10,

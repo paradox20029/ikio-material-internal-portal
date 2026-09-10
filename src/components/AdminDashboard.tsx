@@ -36,7 +36,8 @@ import {
   User, 
   ProductionLine, 
   ShiftType, 
-  ApprovalStatus 
+  ApprovalStatus,
+  RoleType
 } from '../types';
 import { StorageService } from '../services/storage';
 
@@ -71,6 +72,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   // Approval modal / remarks state
   const [activeApprovalEntry, setActiveApprovalEntry] = useState<ProductionEntry | null>(null);
+
+  /*
+   * Roles permitted to sign off production runs and material requisitions.
+   * Quality Inspectors carry the same approval authority as Administrators;
+   * everyone else opens the same modals read-only, seeing the figures, the
+   * shortages and the remarks without the decision controls.
+   *
+   * Add a role here to grant approval rights — it drives both the production
+   * run modal and the shortage requisition modal.
+   *
+   * This is UI-level only. The Firestore rules allow any allowlisted staff
+   * member to write any document, so a determined user could still approve a
+   * run outside the app. Real enforcement needs role-aware security rules.
+   */
+  const APPROVER_ROLES: RoleType[] = ['Administrator', 'Quality Inspector'];
+  const canApprove = APPROVER_ROLES.includes(currentUser.role);
   const [adminRemarks, setAdminRemarks] = useState<string>('');
   const [approvalAction, setApprovalAction] = useState<'Approved' | 'Rejected'>('Approved');
 
@@ -417,7 +434,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     className="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center space-x-1"
                   >
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Approve / Dispatch</span>
+                    <span>{canApprove ? 'Approve / Dispatch' : 'View Request'}</span>
                   </button>
                 </div>
               </div>
@@ -779,7 +796,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         }}
                         className="px-2.5 py-1 rounded-lg bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/50 text-[11px] font-bold transition"
                       >
-                        Review / Signoff
+                        {canApprove ? 'Review / Signoff' : 'View Details'}
                       </button>
                     </td>
                   </tr>
@@ -797,7 +814,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <div className="flex items-center justify-between border-b border-panel-line-subtle pb-3">
               <div className="flex items-center space-x-2">
                 <ShieldCheck className="w-5 h-5 text-indigo-400" />
-                <h3 className="font-bold text-sm text-white">Administrator Approval Review</h3>
+                <h3 className="font-bold text-sm text-white">
+                  {canApprove ? 'Administrator Approval Review' : 'Production Run Details'}
+                </h3>
               </div>
               <button
                 onClick={() => setActiveApprovalEntry(null)}
@@ -847,7 +866,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
             )}
 
-            {/* Admin Decision Selection */}
+            {/* Admin Decision Selection — approvers only */}
+            {canApprove && (
             <div>
               <label className="block text-xs font-bold text-content-dim mb-1.5">Administrator Decision</label>
               <div className="grid grid-cols-2 gap-3">
@@ -878,17 +898,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
               </div>
             </div>
+            )}
 
-            {/* Admin Remarks */}
+            {/* Remarks: editable for approvers, read-only for everyone else */}
             <div>
-              <label className="block text-xs font-bold text-content-dim mb-1">Approval Remarks / Instructions</label>
-              <textarea
-                rows={2}
-                value={adminRemarks}
-                onChange={(e) => setAdminRemarks(e.target.value)}
-                placeholder="e.g. Yield approved. Rework batch cleared by QA. Store buffer dispatched."
-                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3 py-2 text-xs text-content focus:outline-none focus:ring-1 focus:ring-sky-500"
-              />
+              <label className="block text-xs font-bold text-content-dim mb-1">
+                {canApprove ? 'Approval Remarks / Instructions' : 'Administrator Remarks'}
+              </label>
+              {canApprove ? (
+                <textarea
+                  rows={2}
+                  value={adminRemarks}
+                  onChange={(e) => setAdminRemarks(e.target.value)}
+                  placeholder="e.g. Yield approved. Rework batch cleared by QA. Store buffer dispatched."
+                  className="w-full bg-panel-raised border border-panel-line rounded-xl px-3 py-2 text-xs text-content focus:outline-none focus:ring-1 focus:ring-sky-500"
+                />
+              ) : (
+                <p className="w-full bg-panel-raised border border-panel-line rounded-xl px-3 py-2 text-xs text-content-dim italic">
+                  {activeApprovalEntry.adminApprovalNotes || 'No remarks recorded yet.'}
+                </p>
+              )}
             </div>
 
             <div className="flex justify-end space-x-2 pt-2 border-t border-panel-line-subtle">
@@ -897,15 +926,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 onClick={() => setActiveApprovalEntry(null)}
                 className="px-4 py-2 rounded-xl bg-panel-raised hover:bg-panel-high text-content-dim text-xs font-semibold"
               >
-                Cancel
+                {canApprove ? 'Cancel' : 'Close'}
               </button>
-              <button
-                type="button"
-                onClick={handleApproveEntry}
-                className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow"
-              >
-                Confirm Signoff
-              </button>
+              {canApprove && (
+                <button
+                  type="button"
+                  onClick={handleApproveEntry}
+                  className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow"
+                >
+                  Confirm Signoff
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -941,31 +972,49 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
             <div>
               <label className="block text-xs font-bold text-content-dim mb-1">Dispatch Notes / Remarks</label>
-              <input
-                type="text"
-                value={shortageRemarks}
-                onChange={(e) => setShortageRemarks(e.target.value)}
-                placeholder="e.g. Issue 250 pcs from Store Rack SMT-A-04 immediately."
-                className="w-full bg-panel-raised border border-panel-line rounded-xl px-3 py-2 text-xs text-content"
-              />
+              {canApprove ? (
+                <input
+                  type="text"
+                  value={shortageRemarks}
+                  onChange={(e) => setShortageRemarks(e.target.value)}
+                  placeholder="e.g. Issue 250 pcs from Store Rack SMT-A-04 immediately."
+                  className="w-full bg-panel-raised border border-panel-line rounded-xl px-3 py-2 text-xs text-content"
+                />
+              ) : (
+                <p className="w-full bg-panel-raised border border-panel-line rounded-xl px-3 py-2 text-xs text-content-dim italic">
+                  {shortageRemarks || 'No dispatch notes recorded yet.'}
+                </p>
+              )}
             </div>
 
-            <div className="grid grid-cols-2 gap-2 pt-2">
-              <button
-                type="button"
-                onClick={() => handleApproveShortage('Approved')}
-                className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs"
-              >
-                Approve Requisition
-              </button>
-              <button
-                type="button"
-                onClick={() => handleApproveShortage('Rejected')}
-                className="py-2.5 px-3 rounded-xl bg-rose-700 hover:bg-rose-600 text-white font-bold text-xs"
-              >
-                Reject Request
-              </button>
-            </div>
+            {canApprove ? (
+              <div className="grid grid-cols-2 gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => handleApproveShortage('Approved')}
+                  className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs"
+                >
+                  Approve Requisition
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleApproveShortage('Rejected')}
+                  className="py-2.5 px-3 rounded-xl bg-rose-700 hover:bg-rose-600 text-white font-bold text-xs"
+                >
+                  Reject Request
+                </button>
+              </div>
+            ) : (
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => setActiveShortageApproval(null)}
+                  className="w-full py-2.5 px-3 rounded-xl bg-panel-raised hover:bg-panel-high text-content-dim font-bold text-xs"
+                >
+                  Close
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

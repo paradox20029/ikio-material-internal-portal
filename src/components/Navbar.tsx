@@ -11,7 +11,8 @@ import {
   ChevronDown,
   RefreshCw,
   Cpu,
-  Database
+  Database,
+  ClipboardList
 } from 'lucide-react';
 import { User } from '../types';
 import { StorageService } from '../services/storage';
@@ -24,8 +25,8 @@ interface NavbarProps {
   onToggleAlerts: () => void;
   onSignOut: () => void;
   unreadAlertCount: number;
-  activeTab: 'entry' | 'dashboard' | 'logs' | 'shortages' | 'inventory';
-  setActiveTab: (tab: 'entry' | 'dashboard' | 'logs' | 'shortages' | 'inventory') => void;
+  activeTab: 'entry' | 'workorders' | 'dashboard' | 'logs' | 'shortages' | 'inventory';
+  setActiveTab: (tab: 'entry' | 'workorders' | 'dashboard' | 'logs' | 'shortages' | 'inventory') => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -270,7 +271,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span>Material & Line Entry</span>
           </button>
 
-          {/* Tab 2: Admin Dashboard */}
+          {/* Tab 2: Work Orders */}
+          <button
+            id="tab-work-orders"
+            onClick={() => setActiveTab('workorders')}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition whitespace-nowrap cursor-pointer ${
+              activeTab === 'workorders'
+                ? 'bg-surface-active text-white shadow-md border border-accent-bright'
+                : 'text-emerald-100/80 hover:bg-surface hover:text-white'
+            }`}
+          >
+            <ClipboardList className="w-3.5 h-3.5" />
+            <span>Work Orders</span>
+          </button>
+
+          {/* Tab 3: Admin Dashboard */}
           <button
             id="tab-admin-dashboard"
             onClick={() => setActiveTab('dashboard')}
